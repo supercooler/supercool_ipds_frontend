@@ -59,6 +59,11 @@
 </template>
 <script>
 export default {
+  mounted() {
+    this.$get("/parking-boys").then(response => {
+      this.$store.commit("setParkingBoys", response.data);
+    });
+  },
   methods: {
     deleteRow: function() {
       this.$confirm("确定删除该停车员?", "提示", {

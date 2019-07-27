@@ -110,6 +110,9 @@ export default new Vuex.Store({
         status: row.status
       };
       state.centerDialogVisible = true;
+    },
+    setParkingBoys(state, data) {
+      state.parkingBoys = data;
     }
   },
   actions: {}
