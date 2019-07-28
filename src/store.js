@@ -174,6 +174,12 @@ export default new Vuex.Store({
     },
     setResponse(state, response) {
       state.response = response;
+    },
+    loginUser(state, res) {
+      if ("msg" in res) alert(res.msg);
+      else {
+        alert("用户编号 ： " + res.id + " ： 登录成功！ 准备跳转地址：......");
+      }
     }
   },
   actions: {
@@ -209,6 +215,11 @@ export default new Vuex.Store({
     updateParkingBoy: (context, data) => {
       put("/parking-boys", data).then(() => {
         location.reload();
+      });
+    },
+    loginUser: (context, user) => {
+      post("/users", user).then(res => {
+        context.commit("loginUser", res);
       });
     }
   }
