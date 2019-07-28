@@ -10,7 +10,8 @@
 </template>
 
 <script>
-import LoginForm from "../components/LoginForm";
+import LoginForm from "../components/loginUser/LoginForm.vue";
+
 export default {
   name: "login",
   components: {
@@ -25,5 +26,9 @@ export default {
   height: 100px;
   background: #bfdfff;
   margin-bottom: 50px;
+}
+
+.grid-content {
+  text-align: center;
 }
 </style>

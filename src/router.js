@@ -1,7 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
 import ParkingBoy from "./pages/ParkingBoy.vue";
-import Login from "./views/Login.vue";
+import ParkingLot from "./pages/ParkingLot.vue";
+import Login from "./pages/Login.vue";
 
 Vue.use(Router);
 
@@ -18,8 +19,13 @@ export default new Router({
     //addLogin
     {
       path: "/login",
-      name: "/login",
+      name: "login",
       component: Login
+    },
+    {
+      path: "/parkingLot",
+      name: "parkingLot",
+      component: ParkingLot
     }
   ]
 });
