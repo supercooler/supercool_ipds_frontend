@@ -124,13 +124,6 @@ export default new Vuex.Store({
       state.tableData = backupTable;
       state.redundantTableData = backupTable;
     },
-    searchDataByName(state, keyName) {
-      state.tableData = state.redundantTableData;
-      if (keyName != "") {
-        var searchTable = state.tableData.filter(item => item.name == keyName);
-        state.tableData = searchTable;
-      }
-    },
     saveCurrentRow(state, row) {
       state.currentRow = row;
     },
@@ -184,6 +177,11 @@ export default new Vuex.Store({
         context.commit('setResponse', response)
         location.reload();
       })
+    },
+    searchParkingLots(context, name) {
+      get(`/parking-lots/${name}`).then(response => {
+        context.commit("setParkingLots", response);
+      });
     },
     updateParkingBoy: (context, data) => {
       put("/parking-boys", data).then(response => {

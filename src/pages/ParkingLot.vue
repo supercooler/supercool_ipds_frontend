@@ -23,6 +23,7 @@
       :data="
         parkingLots.slice((currentPage - 1) * pageSize, currentPage * pageSize)
       "
+      :default-sort = "{prop: 'capacity', order: 'descending'}"
       stripe
       style="text-align: center"
     >
@@ -107,12 +108,11 @@ export default {
       this.$refs.addParkingLotDialog.showDialog();
     },
     searchParkingLot() {
-      this.$get("/parking-lots").then(res => {
-        console.log("searchParkingLotByName");
-        this.$store.state.tableData = res.data;
-        this.$store.state.redundantTableData = res.data;
-        this.$store.commit("searchDataByName", this.text);
-      });
+      if (this.text === '') {
+        this.$store.dispatch('getParkingLots');
+      }else {
+        this.$store.dispatch('searchParkingLots', this.text)
+      }
     },
     handleSizeChange(val) {
       this.pageSize = val;
