@@ -2,7 +2,7 @@
   <div id="update">
     <el-dialog
       title="修改"
-      :visible.sync="$store.getters.doneCenterDialogVisible"
+      :visible.sync="$store.state.centerDialogVisible"
       width="30%"
       center
     >
@@ -10,6 +10,9 @@
         label-position="right"
         label-width="80px"
         :model="parkingBoyInfo"
+        :rules="$store.getters.donePhoneRules"
+        ref="modifyForm"
+        :before-close="handleClose"
       >
         <el-form-item label="id:">
           <el-input v-model="parkingBoyInfo.id" :disabled="true"></el-input>
@@ -29,7 +32,7 @@
             :disabled="true"
           ></el-input>
         </el-form-item>
-        <el-form-item label="手机:">
+        <el-form-item label="手机:" prop="phone">
           <el-input v-model.number="parkingBoyInfo.phone"></el-input>
         </el-form-item>
         <el-form-item label="状态:">
@@ -37,12 +40,8 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="$store.state.centerDialogVisible = false"
-          >取 消</el-button
-        >
-        <el-button
-          type="primary"
-          @click="$store.state.centerDialogVisible = false"
+        <el-button @click="handleClose">取 消</el-button>
+        <el-button type="primary" @click="saveModifyForm('modifyForm')"
           >保 存</el-button
         >
       </span>
@@ -54,6 +53,34 @@ export default {
   computed: {
     parkingBoyInfo: function() {
       return this.$store.getters.doneParkingBoyInfo;
+    }
+  },
+  methods: {
+    saveModifyForm: function(modifyForm) {
+      this.$refs[modifyForm].validate(valid => {
+        if (valid) {
+          this.$store.state.centerDialogVisible = false;
+          let model = this.$refs.modifyForm.model;
+          let data = {
+            age: model.age,
+            gender: model.gender,
+            id: model.id,
+            name: model.name,
+            phone: model.phone,
+            status: model.status,
+            workExperience: model.workExperience
+          };
+          this.$store.dispatch("updateParkingBoy", data);
+          this.$message.success("保存成功");
+        } else {
+          this.$message.error("保存失败");
+          return false;
+        }
+      });
+    },
+    handleClose: function() {
+      this.$store.state.centerDialogVisible = false;
+      this.$refs.modifyForm.resetFields();
     }
   }
 };

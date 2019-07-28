@@ -3,7 +3,14 @@ import Vuex from "vuex";
 import { get, post, put } from "./config/axios";
 
 Vue.use(Vuex);
-
+var validatePhone = (rule, value, callback) => {
+  var regex = new RegExp(/^[0-9]{11}$/);
+  if (!regex.test(value)) {
+    callback(new Error("请输入正确的手机号码！"));
+  } else {
+    callback();
+  }
+};
 export default new Vuex.Store({
   state: {
     type: "姓名",
@@ -72,7 +79,8 @@ export default new Vuex.Store({
         label: "女"
       }
     ],
-    parkingBoyInfo: {}
+    parkingBoyInfo: {},
+    phoneRules: { phone: [{ validator: validatePhone, trigger: "blur" }] }
   },
   getters: {
     doneType: state => {
@@ -102,11 +110,11 @@ export default new Vuex.Store({
     doneParkingBoys: state => {
       return state.parkingBoys;
     },
-    doneCenterDialogVisible: state => {
-      return state.centerDialogVisible;
-    },
     doneParkingBoyPhone: state => {
       return state.parkingBoyPhone;
+    },
+    donePhoneRules: state => {
+      return state.phoneRules;
     }
   },
   mutations: {
@@ -159,6 +167,12 @@ export default new Vuex.Store({
     },
     setResponse(state, response) {
       state.response = response;
+    },
+    loginUser(state, res) {
+      if ("msg" in res) alert(res.msg);
+      else {
+        alert("用户编号 ： " + res.id + " ： 登录成功！ 准备跳转地址：......");
+      }
     }
   },
   actions: {
@@ -192,6 +206,16 @@ export default new Vuex.Store({
         if (response.status === 200) {
           this.$message.success("修改成功！");
         }
+      });
+    },
+    updateParkingBoy: (context, data) => {
+      put("/parking-boys", data).then(() => {
+        location.reload();
+      });
+    },
+    loginUser: (context, user) => {
+      post("/users", user).then(res => {
+        context.commit("loginUser", res);
       });
     }
   }
