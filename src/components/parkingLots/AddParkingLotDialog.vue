@@ -28,7 +28,7 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="addParkingLot('addForm')" +
+          <el-button type="primary" @click="addParkingLot('addForm')"
             >确定
           </el-button>
           <el-button @click="cancelForm('addForm')">取消</el-button>
@@ -79,20 +79,17 @@ export default {
       });
     },
     async createParkingLot(formName) {
-      this.$store.dispatch("createParkingLot", {
-        name: this.parkingLot.name,
-        capacity: this.parkingLot.capacity,
-        address: this.parkingLot.address
-      });
-      await this.getParkingLots();
+      this.$store
+        .dispatch("createParkingLot", {
+          name: this.parkingLot.name,
+          capacity: this.parkingLot.capacity,
+          address: this.parkingLot.address
+        })
+        .then(() => {
+          location.reload();
+        });
       this.$refs[formName].resetFields();
       this.dialogFormVisible = false;
-    },
-    async getParkingLots() {
-      this.$store.dispatch("getParkingLots", {
-        currentPage: this.currentPage,
-        pageSize: this.pageSize
-      });
     },
     cancelForm(formName) {
       this.dialogFormVisible = false;

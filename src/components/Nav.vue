@@ -13,7 +13,7 @@
         </el-menu-item>
         <el-menu-item index="2">
           <i class="el-icon-edit"></i>
-          <span slot="title" @click="relocation('/parking-lot')"
+          <span slot="title" @click="relocation('/parkingLot')"
             >停车场管理</span
           >
         </el-menu-item>
