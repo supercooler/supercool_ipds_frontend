@@ -63,7 +63,11 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          //   console.log(this.$refs[formName].model);
+          let user = {
+            userName: this.$refs[formName].model.userName,
+            password: this.$refs[formName].model.password
+          };
+          this.$store.dispatch("loginUser", user);
         } else {
           this.$message.error("错了哦，这是一条错误消息");
           return false;

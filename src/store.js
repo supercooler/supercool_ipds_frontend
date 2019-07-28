@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { get } from "./config/axios";
+import { post, get } from "./config/axios";
 
 Vue.use(Vuex);
 
@@ -140,6 +140,12 @@ export default new Vuex.Store({
     },
     setSearchName(state, name) {
       state.name = name;
+    },
+    loginUser(state, res) {
+      if ("msg" in res) alert(res.msg);
+      else {
+        alert("用户编号 ： " + res.id + " ： 登录成功！ 准备跳转地址：......");
+      }
     }
   },
   actions: {
@@ -154,6 +160,11 @@ export default new Vuex.Store({
         : { name: context.state.name };
       get("/parking-boys", condition).then(response => {
         context.commit("setParkingBoys", response.data);
+      });
+    },
+    loginUser: (context, user) => {
+      post("/users", user).then(res => {
+        context.commit("loginUser", res);
       });
     }
   }

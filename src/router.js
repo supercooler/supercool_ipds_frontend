@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import ParkingBoy from "./pages/ParkingBoy.vue";
-import Login from "./views/Login.vue";
+import Login from "./pages/Login.vue";
 
 Vue.use(Router);
 
