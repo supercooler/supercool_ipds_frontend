@@ -29,35 +29,7 @@ export default new Vuex.Store({
         address: ""
       }
     ],
-    parkingBoys: [
-      {
-        id: 1,
-        name: "王小虎",
-        age: 20,
-        gender: "男",
-        workExperience: "2年",
-        phone: "13800138000",
-        status: "忙碌"
-      },
-      {
-        id: 2,
-        name: "王大虎",
-        age: 22,
-        gender: "女",
-        workExperience: "5年",
-        phone: "13800138000",
-        status: "空闲"
-      },
-      {
-        id: 3,
-        name: "王老虎",
-        age: 32,
-        gender: "男",
-        workExperience: "15年",
-        phone: "13700000000",
-        status: "空闲"
-      }
-    ],
+    parkingBoys: [],
     types: [
       {
         value: "name",
