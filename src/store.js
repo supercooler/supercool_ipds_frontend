@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { get, post } from "./config/axios";
+import { get, post, put } from "./config/axios";
 
 Vue.use(Vuex);
 
@@ -150,13 +150,6 @@ export default new Vuex.Store({
         state.tableData = searchTable;
       }
     },
-    updateParkingLot(state, formName) {
-      var index = state.tableData.map(i => i.id).indexOf(parseInt(formName.id));
-      state.tableData[index].name = formName.name;
-      state.tableData[index].capacity = formName.capacity;
-      state.redundantTableData[index].name = formName.name;
-      state.redundantTableData[index].capacity = formName.capacity;
-    },
     saveCurrentRow(state, row) {
       state.currentRow = row;
     },
@@ -182,12 +175,8 @@ export default new Vuex.Store({
         context.commit("setParkingBoys", response.data);
       });
     },
-    getParkingLots: (context, page) => {
-      get(
-        `/parking-lots/current-page/${page.currentPage}/page-size/${
-          page.pageSize
-        }`
-      ).then(response => {
+    getParkingLots: context => {
+      get("/parking-lots").then(response => {
         context.commit("setParkingLots", response);
       });
     },
@@ -195,6 +184,13 @@ export default new Vuex.Store({
       post("/parking-lots", parkingLot).then(response => {
         if (response.status === 200) {
           this.$message.success("添加成功！");
+        }
+      });
+    },
+    updateParkingLot(state, parkingLot) {
+      put("/parking-lots", parkingLot).then(response => {
+        if (response.status === 200) {
+          this.$message.success("修改成功！");
         }
       });
     }

@@ -19,7 +19,7 @@
       show-word-limit
     >
     </el-input>
-    <el-table :data="parkingLots" stripe style="width: 100%;text-align: center">
+    <el-table :data="parkingLots.slice((currentPage-1)*pageSize,currentPage*pageSize)" stripe style="text-align: center">
       <el-table-column prop="name" label="名字"></el-table-column>
       <el-table-column prop="capacity" label="容量"></el-table-column>
       <el-table-column prop="address" label="地址"></el-table-column>
@@ -56,19 +56,19 @@
       :currentPage="currentPage"
       :pageSize="pageSize"
       ref="addParkingLotDialog"
-    ></AddParkingLotDialog>
+    ></AddParkingLotDialog >
     <updateParkingLotForm ref="updateParkingLotForm"></updateParkingLotForm>
   </div>
 </template>
 
 <script>
-import updateParkingLotForm from "../components/parkingLots/updateParkingLotForm.vue";
+import UpdateParkingLotForm from "../components/parkingLots/UpdateParkingLotForm.vue";
 import AddParkingLotDialog from "../components/parkingLots/AddParkingLotDialog.vue";
 
 export default {
   name: "parkingLot",
   components: {
-    updateParkingLotForm,
+    UpdateParkingLotForm,
     AddParkingLotDialog
   },
   props: {
@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     handleEdit(parkingLot) {
-      console.log(parkingLot);
+      this.$refs.updateParkingLotForm.showDialog(parkingLot);
     },
     handleDelete(parkingLot) {
       console.log(parkingLot);
@@ -103,17 +103,9 @@ export default {
     },
     handleSizeChange(val) {
       this.pageSize = val;
-      this.$store.dispatch("getParkingLots", {
-        currentPage: this.currentPage - 1,
-        pageSize: this.pageSize
-      });
     },
     handleCurrentChange(val) {
       this.currentPage = val;
-      this.$store.dispatch("getParkingLots", {
-        currentPage: this.currentPage - 1,
-        pageSize: this.pageSize
-      });
     }
   },
   mounted() {
