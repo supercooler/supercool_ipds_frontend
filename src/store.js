@@ -139,7 +139,7 @@ export default new Vuex.Store({
     loginUser(state, res) {
       if ("msg" in res) alert(res.msg);
       else {
-        state.userName = res.userName;
+        localStorage.setItem("userName", JSON.stringify(res.userName));
         Router.push("/home");
       }
     },

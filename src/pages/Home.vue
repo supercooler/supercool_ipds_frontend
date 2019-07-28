@@ -2,9 +2,7 @@
   <el-container>
     <el-header
       ><span><strong>智能派单停车系统</strong></span>
-      <span style="margin-left: 1400px"
-        >Hello, {{ this.$store.state.userName }}</span
-      >
+      <span style="margin-left: 1400px">Hello, {{ userName }}</span>
     </el-header>
     <el-container>
       <el-aside>
@@ -23,7 +21,15 @@ import Nav from "../components/Nav.vue";
 
 export default {
   name: "Home",
-  components: { Nav }
+  components: { Nav },
+  data() {
+    return {
+      userName: ""
+    };
+  },
+  mounted() {
+    this.userName = localStorage.getItem("userName");
+  }
 };
 </script>
 
