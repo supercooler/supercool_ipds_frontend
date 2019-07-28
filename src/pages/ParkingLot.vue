@@ -1,9 +1,17 @@
 <template>
   <div class="parkingLot">
-    <el-button type="primary" class="addButton" v-model="input3">添加</el-button>
-    <el-button type="primary" icon="el-icon-search" class="searchButton">搜索</el-button>
+    <el-button type="primary" class="addButton" v-model="input3"
+      >添加</el-button
+    >
+    <el-button
+      type="primary"
+      icon="el-icon-search"
+      class="searchButton"
+      @click="searchData"
+      >搜索</el-button
+    >
     <el-input
-    class="searchbar"
+      class="searchbar"
       type="text"
       placeholder="请输入内容"
       v-model="text"
@@ -11,28 +19,50 @@
       show-word-limit
     >
     </el-input>
-    <el-table id="table" border="true" :data="tableData" style="width: 100%">
-      <el-table-column label="id" width="180">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.id }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="名字" width="180">
+    <el-table
+      id="table"
+      border="true"
+      :data="this.$store.state.tableData"
+      style="width: 100%"
+    >
+      <el-table-column label="名字" align="center">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="大小" width="180">
+      <el-table-column label="大小" align="center">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.capacity }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="地址" align="center">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleEdit(scope.$index, scope.row)">
-            <i class="el-icon-edit"></i>修改
-          </el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">
+          <span style="margin-left: 10px">{{ scope.row.address }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" align="center">
+        <template slot-scope="scope">
+          <el-button
+            id="updateBtn"
+            size="mini"
+            type="primary"
+            @click="dialogFormVisible = true"
+            ><i class="el-icon-edit"></i>修改</el-button
+          >
+          <el-dialog
+            title="修改停车场"
+            :visible.sync="dialogFormVisible"
+            width="400px"
+          >
+            <update-parking-lot-form
+              @childTrigger="setVisible"
+            ></update-parking-lot-form>
+          </el-dialog>
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.$index, scope.row)"
+          >
             <i class="el-icon-delete"></i>删除
           </el-button>
         </template>
@@ -42,6 +72,7 @@
 </template>
 
 <script>
+import UpdateParkingLotForm from "../components/parkingLots/updateParkingLotForm.vue";
 export default {
   name: "parkingLot",
   props: {
@@ -49,31 +80,34 @@ export default {
   },
   data() {
     return {
-      tableData: [
-        {
-          id: 1,
-          name: "王小虎",
-          capacity: 10
-        },
-        {
-          id: 2,
-          name: "王小虎",
-          capacity: 5
-        },
-        {
-          id: 3,
-          name: "王小虎",
-          capacity: 10
-        },
-        {
-          id: 4,
-          name: "王小虎",
-          capacity: 8
-        }
-      ],
+      dialogFormVisible: false,
       input3: "",
       text: ""
     };
+  },
+  methods: {
+    searchData() {
+      this.$get("/parking-lots").then(res => {
+        console.log("searchParkingLotByName");
+        this.$store.state.tableData = res.data;
+        this.$store.state.redundantTableData = res.data;
+        this.$store.commit("searchDataByName", this.text);
+      });
+    },
+    setVisible() {
+      this.dialogFormVisible = false;
+    }
+  },
+  components: {
+    UpdateParkingLotForm
+  },
+  created() {
+    this.$get("/parking-lots").then(res => {
+      console.log("getAllParkingLot");
+      this.$store.state.tableData = res.data;
+      this.$store.state.redundantTableData = res.data;
+      this.$store.commit("sortTable");
+    });
   }
 };
 </script>
@@ -97,9 +131,9 @@ a {
 #table {
   margin: auto;
 }
-.hello{
+.hello {
   position: relative;
-  width:100%;
+  width: 100%;
 }
 .button {
   width: 100%;
@@ -107,10 +141,10 @@ a {
   margin-bottom: 5px;
   position: relative;
 }
-.addButton{
-  float:left;
-  left:10px;
-  margin-top:10px;
+.addButton {
+  float: left;
+  left: 10px;
+  margin-top: 10px;
 }
 .searchBar {
   float: right;
@@ -130,13 +164,13 @@ a {
   float: left;
   width: 100%;
 }
-.searchButton{
-  margin-top:10px;
-   float:right;
+.searchButton {
+  margin-top: 10px;
+  float: right;
 }
-.searchbar{
-  margin-top:10px;
-  width:200px;
-  float:right;
+.searchbar {
+  margin-top: 10px;
+  width: 200px;
+  float: right;
 }
 </style>
