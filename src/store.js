@@ -93,6 +93,9 @@ export default new Vuex.Store({
     },
     doneCenterDialogVisible: state => {
       return state.centerDialogVisible;
+    },
+    doneParkingBoyPhone: state => {
+      return state.parkingBoyPhone;
     }
   },
   mutations: {
@@ -119,6 +122,14 @@ export default new Vuex.Store({
   actions: {
     getParkingBoysFromBackend: context => {
       get("/parking-boys").then(response => {
+        context.commit("setParkingBoys", response.data);
+      });
+    },
+    searchParkingBoys: context => {
+      let condition = context.state.isGenderShow
+        ? { gender: context.state.gender }
+        : { name: context.state.name };
+      get("/parking-boys", condition).then(response => {
         context.commit("setParkingBoys", response.data);
       });
     }

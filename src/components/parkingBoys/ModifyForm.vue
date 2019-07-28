@@ -30,7 +30,7 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="手机:">
-          <el-input v-model="parkingBoyInfo.phone"></el-input>
+          <el-input v-model.number="parkingBoyInfo.phone"></el-input>
         </el-form-item>
         <el-form-item label="状态:">
           <el-input v-model="parkingBoyInfo.status" :disabled="true"></el-input>

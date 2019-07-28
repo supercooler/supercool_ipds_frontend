@@ -22,7 +22,7 @@
           v-for="item in $store.getters.doneGenders"
           :key="item.value"
           :label="item.label"
-          :value="item.value"
+          :value="item.label"
         ></el-option>
       </el-select>
       <div width="180" style="display:inline-block">
@@ -33,7 +33,12 @@
           v-show="$store.getters.doneIsNameShow"
         ></el-input>
       </div>
-      <el-button type="primary" icon="el-icon-search">搜索</el-button>
+      <el-button
+        type="primary"
+        icon="el-icon-search"
+        @click="$store.dispatch('searchParkingBoys')"
+        >搜索</el-button
+      >
     </el-row>
   </div>
 </template>
