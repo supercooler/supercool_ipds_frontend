@@ -53,6 +53,16 @@ export default {
       text: ""
     };
   },
+   methods:{
+    searchData(){
+      this.$get("/parking-lots").then(res=>{
+      console.log("ParkingLot1");
+      this.$store.state.tableData=res.data;
+      this.$store.state.redundantTableData=res.data;
+      this.$store.commit('searchDataByName',this.text);
+    })
+    }
+  },
   created(){
     this.$get("/parking-lots").then(res=>{
       console.log("ParkingLot");
@@ -64,6 +74,7 @@ export default {
 };
 </script>
 
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 h3 {
   margin: 40px 0 0;

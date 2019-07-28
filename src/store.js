@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { get } from "./config/axios";
 
 Vue.use(Vuex);
 
@@ -130,24 +129,24 @@ export default new Vuex.Store({
     },
     setParkingBoys(state, data) {
       state.parkingBoys = data;
+    },
+    sortTable(state){
+      var capacity=state.tableData.map(i=>i.capacity).sort((a,b)=>a-b).reverse();
+      var backupTable=[];
+      capacity.forEach((v)=>{
+        var index=state.tableData.map(i=>i.capacity).indexOf(v);
+        backupTable.push(state.tableData[index]);
+      })
+      state.tableData=backupTable;
+      state.redundantTableData=backupTable;
+    },
+    searchDataByName(state,keyName){
+      state.tableData=state.redundantTableData;
+      if(keyName!=''){
+        var searchTable=state.tableData.filter(item=>item.name==keyName);
+        state.tableData=searchTable;
+      }
     }
   },
-  actions: {
-    getParkingBoysFromBackend: context => {
-      get("/parking-boys").then(response => {
-        context.commit("setParkingBoys", response.data);
-      });
-    }
-  },
-  sortTable(state){
-    var capacity=state.tableData.map(i=>i.capacity).sort((a,b)=>a-b).reverse();
-    var backupTable=[];
-    capacity.forEach((v)=>{
-      var index=state.redundantTableData.map(i=>i.capacity).indexOf(v);
-      backupTable.push(state.tableData[index]);
-      state.redundantTableData[index].capacity=-1;
-    })
-    state.tableData=backupTable;
-    state.redundantTableData=backupTable;
-  }
+  actions: {}
 });
