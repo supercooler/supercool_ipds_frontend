@@ -19,7 +19,13 @@
       show-word-limit
     >
     </el-input>
-    <el-table :data="parkingLots.slice((currentPage-1)*pageSize,currentPage*pageSize)" stripe style="text-align: center">
+    <el-table
+      :data="
+        parkingLots.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+      "
+      stripe
+      style="text-align: center"
+    >
       <el-table-column prop="name" label="名字"></el-table-column>
       <el-table-column prop="capacity" label="容量"></el-table-column>
       <el-table-column prop="address" label="地址"></el-table-column>
@@ -36,7 +42,7 @@
             size="mini"
             type="danger"
             icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
+            @click="handleDelete(scope.row.id)"
             >删除
           </el-button>
         </template>
@@ -56,7 +62,7 @@
       :currentPage="currentPage"
       :pageSize="pageSize"
       ref="addParkingLotDialog"
-    ></AddParkingLotDialog >
+    ></AddParkingLotDialog>
     <updateParkingLotForm ref="updateParkingLotForm"></updateParkingLotForm>
   </div>
 </template>
@@ -87,8 +93,15 @@ export default {
     handleEdit(parkingLot) {
       this.$refs.updateParkingLotForm.showDialog(parkingLot);
     },
-    handleDelete(parkingLot) {
-      console.log(parkingLot);
+    handleDelete(id) {
+      this.$confirm("您确定要删除吗？", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          this.$store.dispatch("deleteParkingLot", id);
+        })
+        .catch(() => {});
     },
     showAddDialog() {
       this.$refs.addParkingLotDialog.showDialog();

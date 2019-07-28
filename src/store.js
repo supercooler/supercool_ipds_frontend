@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { get, post, put } from "./config/axios";
+import {get, post, put, myDelete} from "./config/axios";
 
 Vue.use(Vuex);
 var validatePhone = (rule, value, callback) => {
@@ -201,15 +201,20 @@ export default new Vuex.Store({
         }
       });
     },
-    updateParkingLot(state, parkingLot) {
+    updateParkingLot(context, parkingLot) {
       put("/parking-lots", parkingLot).then(response => {
-        if (response.status === 200) {
-          this.$message.success("修改成功！");
-        }
+       context.commit('setResponse', response)
       });
     },
+    deleteParkingLot(context, id) {
+      myDelete(`/parking-lots/${id}`).then(response=>{
+        context.commit('setResponse', response)
+        location.reload();
+      })
+    },
     updateParkingBoy: (context, data) => {
-      put("/parking-boys", data).then(() => {
+      put("/parking-boys", data).then(response => {
+        context.commit('setResponse', response)
         location.reload();
       });
     },
