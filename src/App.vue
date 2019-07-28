@@ -64,7 +64,6 @@ export default {
   /* background-color: #E9EEF3; */
   /* color: #333; */
   text-align: center;
-  line-height: 160px;
   width: 100%;
   height: 850px;
 }

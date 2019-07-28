@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import {get, post, put, myDelete} from "./config/axios";
+import Router from "./router.js";
+import { get, post, put, myDelete } from "./config/axios";
 
 Vue.use(Vuex);
 var validatePhone = (rule, value, callback) => {
@@ -13,6 +14,7 @@ var validatePhone = (rule, value, callback) => {
 };
 export default new Vuex.Store({
   state: {
+    userName: "",
     type: "姓名",
     name: "",
     gender: "",
@@ -137,7 +139,8 @@ export default new Vuex.Store({
     loginUser(state, res) {
       if ("msg" in res) alert(res.msg);
       else {
-        alert("用户编号 ： " + res.id + " ： 登录成功！ 准备跳转地址：......");
+        state.userName = res.userName;
+        Router.push("/home");
       }
     }
   },
@@ -169,14 +172,14 @@ export default new Vuex.Store({
     },
     updateParkingLot(context, parkingLot) {
       put("/parking-lots", parkingLot).then(response => {
-       context.commit('setResponse', response)
+        context.commit("setResponse", response);
       });
     },
     deleteParkingLot(context, id) {
-      myDelete(`/parking-lots/${id}`).then(response=>{
-        context.commit('setResponse', response)
+      myDelete(`/parking-lots/${id}`).then(response => {
+        context.commit("setResponse", response);
         location.reload();
-      })
+      });
     },
     searchParkingLots(context, name) {
       get(`/parking-lots/${name}`).then(response => {
@@ -185,7 +188,7 @@ export default new Vuex.Store({
     },
     updateParkingBoy: (context, data) => {
       put("/parking-boys", data).then(response => {
-        context.commit('setResponse', response)
+        context.commit("setResponse", response);
         location.reload();
       });
     },
