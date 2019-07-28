@@ -1,24 +1,24 @@
 <template>
- <div id="app">
-     <div id="nav">
-<!--    <Nav></Nav>-->
-    <router-view />
+  <div id="app">
+    <div id="nav">
+      <!--    <Nav></Nav>-->
+      <router-view />
+    </div>
   </div>
- </div>
-<!--  <el-container>-->
-<!--    <el-header>-->
-<!--      Header-->
-<!--    </el-header>-->
-<!--    <el-container>-->
-<!--      <el-aside width="200px">-->
-<!--        <Nav></Nav>-->
-<!--      </el-aside>-->
-<!--      <el-main>-->
-<!--        <router-view />-->
-<!--      </el-main>-->
-<!--    </el-container>-->
-<!--    <el-footer>@2019 SuperCool</el-footer>-->
-<!--  </el-container>-->
+  <!--  <el-container>-->
+  <!--    <el-header>-->
+  <!--      Header-->
+  <!--    </el-header>-->
+  <!--    <el-container>-->
+  <!--      <el-aside width="200px">-->
+  <!--        <Nav></Nav>-->
+  <!--      </el-aside>-->
+  <!--      <el-main>-->
+  <!--        <router-view />-->
+  <!--      </el-main>-->
+  <!--    </el-container>-->
+  <!--    <el-footer>@2019 SuperCool</el-footer>-->
+  <!--  </el-container>-->
 </template>
 <script>
 // import Nav from "@/components/Nav.vue";

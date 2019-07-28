@@ -79,13 +79,15 @@ export default {
       });
     },
     async createParkingLot(formName) {
-      this.$store.dispatch("createParkingLot", {
-        name: this.parkingLot.name,
-        capacity: this.parkingLot.capacity,
-        address: this.parkingLot.address
-      }).then(() => {
+      this.$store
+        .dispatch("createParkingLot", {
+          name: this.parkingLot.name,
+          capacity: this.parkingLot.capacity,
+          address: this.parkingLot.address
+        })
+        .then(() => {
           location.reload();
-      })
+        });
       this.$refs[formName].resetFields();
       this.dialogFormVisible = false;
     },

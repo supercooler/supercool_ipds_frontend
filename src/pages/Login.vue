@@ -26,6 +26,8 @@ export default {
   height: 100px;
   background: #bfdfff;
   margin-bottom: 50px;
+  margin-left: 100px;
+  cursor: default;
 }
 
 .grid-content {

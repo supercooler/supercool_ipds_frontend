@@ -36,9 +36,9 @@ export default {
     return {
       dialogFormVisible: false,
       parkingLot: {
-        id: '',
-        name: '',
-        capacity: ''
+        id: "",
+        name: "",
+        capacity: ""
       },
       rules: {
         name: [
@@ -74,9 +74,9 @@ export default {
       this.dialogFormVisible = false;
     },
     async updateParkingLot() {
-      this.$store.dispatch('updateParkingLot', this.parkingLot).then(()=>{
+      this.$store.dispatch("updateParkingLot", this.parkingLot).then(() => {
         location.reload();
-      })
+      });
       this.dialogFormVisible = false;
     }
   }
