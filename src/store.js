@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import { get } from "./config/axios";
 
 Vue.use(Vuex);
 
@@ -115,5 +116,11 @@ export default new Vuex.Store({
       state.parkingBoys = data;
     }
   },
-  actions: {}
+  actions: {
+    getParkingBoysFromBackend: context => {
+      get("/parking-boys").then(response => {
+        context.commit("setParkingBoys", response.data);
+      });
+    }
+  }
 });

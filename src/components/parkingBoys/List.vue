@@ -60,9 +60,7 @@
 <script>
 export default {
   mounted() {
-    this.$get("/parking-boys").then(response => {
-      this.$store.commit("setParkingBoys", response.data);
-    });
+    this.$store.dispatch("getParkingBoysFromBackend");
   },
   methods: {
     deleteRow: function() {
