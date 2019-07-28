@@ -39,7 +39,12 @@
         prop="status"
         label="状态"
       ></el-table-column>
-      <el-table-column align="center" prop="operation" label="操作">
+      <el-table-column
+        align="center"
+        prop="operation"
+        label="操作"
+        width="300px"
+      >
         <template slot-scope="scope">
           <el-row>
             <el-button

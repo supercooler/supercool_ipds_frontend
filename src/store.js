@@ -80,7 +80,8 @@ export default new Vuex.Store({
       }
     ],
     parkingBoyInfo: {},
-    phoneRules: { phone: [{ validator: validatePhone, trigger: "blur" }] }
+    phoneRules: { phone: [{ validator: validatePhone, trigger: "blur" }] },
+    dialogFormVisible: false
   },
   getters: {
     doneType: state => {
@@ -208,6 +209,11 @@ export default new Vuex.Store({
     },
     updateParkingBoy: (context, data) => {
       put("/parking-boys", data).then(() => {
+        location.reload();
+      });
+    },
+    addParkingBoy: (context, data) => {
+      post(`/parking-boys`, data).then(() => {
         location.reload();
       });
     }
