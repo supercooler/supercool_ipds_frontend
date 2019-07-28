@@ -1,7 +1,7 @@
 <template>
   <div class="parkingLot">
     <el-button type="primary" class="addButton" v-model="input3">添加</el-button>
-    <el-button type="primary" icon="el-icon-search" class="searchButton">搜索</el-button>
+    <el-button type="primary" icon="el-icon-search" class="searchButton" @click="searchData">搜索</el-button>
     <el-input
     class="searchbar"
       type="text"
@@ -11,23 +11,23 @@
       show-word-limit
     >
     </el-input>
-    <el-table id="table" border="true" :data="tableData" style="width: 100%">
-      <el-table-column label="id" width="180">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.id }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="名字" width="180">
+    <el-table id="table" border="true" :data="this.$store.state.tableData" style="width: 100%">
+      <el-table-column label="名字" align="center">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="大小" width="180">
+      <el-table-column label="大小" align="center">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.capacity }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="地址" align="center">
+        <template slot-scope="scope">
+          <span style="margin-left: 10px">{{ scope.row.address }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleEdit(scope.$index, scope.row)">
             <i class="el-icon-edit"></i>修改
@@ -49,31 +49,17 @@ export default {
   },
   data() {
     return {
-      tableData: [
-        {
-          id: 1,
-          name: "王小虎",
-          capacity: 10
-        },
-        {
-          id: 2,
-          name: "王小虎",
-          capacity: 5
-        },
-        {
-          id: 3,
-          name: "王小虎",
-          capacity: 10
-        },
-        {
-          id: 4,
-          name: "王小虎",
-          capacity: 8
-        }
-      ],
       input3: "",
       text: ""
     };
+  },
+  created(){
+    this.$get("/parking-lots").then(res=>{
+      console.log("ParkingLot");
+      this.$store.state.tableData=res.data;
+      this.$store.state.redundantTableData=res.data;
+      this.$store.commit('sortTable');
+    })
   }
 };
 </script>

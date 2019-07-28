@@ -12,6 +12,22 @@ export default new Vuex.Store({
     isGenderShow: false,
     isNameShow: true,
     centerDialogVisible: false,
+    tableData:[
+      {
+        id:'',
+        name:'',
+        capacity:'',
+        address:''
+      }
+    ],
+    redundantTableData: [
+      {
+        id:'',
+        name:'',
+        capacity:'',
+        address:''
+      }
+    ],
     parkingBoys: [
       {
         id: 1,
@@ -122,5 +138,16 @@ export default new Vuex.Store({
         context.commit("setParkingBoys", response.data);
       });
     }
+  },
+  sortTable(state){
+    var capacity=state.tableData.map(i=>i.capacity).sort((a,b)=>a-b).reverse();
+    var backupTable=[];
+    capacity.forEach((v)=>{
+      var index=state.redundantTableData.map(i=>i.capacity).indexOf(v);
+      backupTable.push(state.tableData[index]);
+      state.redundantTableData[index].capacity=-1;
+    })
+    state.tableData=backupTable;
+    state.redundantTableData=backupTable;
   }
 });
