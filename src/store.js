@@ -207,8 +207,8 @@ export default new Vuex.Store({
     },
     deleteParkingBoy: (context, id) => {
       console.log(id);
-      myDelete("/parking-boys?id=" + id).then(res => {
-        console.log(res);
+      myDelete("/parking-boys?id=" + id).then(() => {
+        location.reload();
       });
     }
   }
