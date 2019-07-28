@@ -29,9 +29,10 @@
       </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleEdit(scope.$index, scope.row)">
-            <i class="el-icon-edit"></i>修改
-          </el-button>
+          <el-button id="updateBtn" size="mini" type="primary" @click="dialogFormVisible =true" ><i class="el-icon-edit"></i>修改</el-button>
+          <el-dialog title="修改停车场" :visible.sync="dialogFormVisible" width="400px">
+            <update-parking-lot-form @childTrigger="setVisible"></update-parking-lot-form>
+          </el-dialog>
           <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">
             <i class="el-icon-delete"></i>删除
           </el-button>
@@ -42,6 +43,7 @@
 </template>
 
 <script>
+import UpdateParkingLotForm from '../components/parkingLots/updateParkingLotForm.vue'
 export default {
   name: "parkingLot",
   props: {
@@ -49,6 +51,7 @@ export default {
   },
   data() {
     return {
+      dialogFormVisible:false,
       input3: "",
       text: ""
     };
@@ -56,16 +59,22 @@ export default {
    methods:{
     searchData(){
       this.$get("/parking-lots").then(res=>{
-      console.log("ParkingLot1");
+      console.log("searchParkingLotByName");
       this.$store.state.tableData=res.data;
       this.$store.state.redundantTableData=res.data;
       this.$store.commit('searchDataByName',this.text);
     })
+    },
+    setVisible(){
+      this.dialogFormVisible=false
     }
+  },
+  components:{
+    UpdateParkingLotForm
   },
   created(){
     this.$get("/parking-lots").then(res=>{
-      console.log("ParkingLot");
+      console.log("getAllParkingLot");
       this.$store.state.tableData=res.data;
       this.$store.state.redundantTableData=res.data;
       this.$store.commit('sortTable');
@@ -74,7 +83,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 h3 {
   margin: 40px 0 0;

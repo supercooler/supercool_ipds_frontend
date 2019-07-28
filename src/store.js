@@ -11,6 +11,7 @@ export default new Vuex.Store({
     isGenderShow: false,
     isNameShow: true,
     centerDialogVisible: false,
+    currentRow:{},
     tableData:[
       {
         id:'',
@@ -134,8 +135,9 @@ export default new Vuex.Store({
       var capacity=state.tableData.map(i=>i.capacity).sort((a,b)=>a-b).reverse();
       var backupTable=[];
       capacity.forEach((v)=>{
-        var index=state.tableData.map(i=>i.capacity).indexOf(v);
+        var index=state.redundantTableData.map(i=>i.capacity).indexOf(v);
         backupTable.push(state.tableData[index]);
+        state.redundantTableData[index].capacity=-1;
       })
       state.tableData=backupTable;
       state.redundantTableData=backupTable;
@@ -146,6 +148,16 @@ export default new Vuex.Store({
         var searchTable=state.tableData.filter(item=>item.name==keyName);
         state.tableData=searchTable;
       }
+    },
+    updateParkingLot(state,formName){
+      var index=state.tableData.map(i=>i.id).indexOf(parseInt(formName.id));
+      state.tableData[index].name=formName.name;
+      state.tableData[index].capacity=formName.capacity;
+      state.redundantTableData[index].name=formName.name;
+      state.redundantTableData[index].capacity=formName.capacity;
+    },
+    saveCurrentRow(state,row){
+       state.currentRow=row
     }
   },
   actions: {}
