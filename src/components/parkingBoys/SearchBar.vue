@@ -26,12 +26,16 @@
         ></el-option>
       </el-select>
       <div width="180" style="display:inline-block">
-        <el-input
-          placeholder="请输入名字"
-          prefix-icon="el-icon-search"
-          v-model="$store.state.name"
-          v-show="$store.getters.doneIsNameShow"
-        ></el-input>
+        <el-form :rules="rules" :model="inputData">
+          <el-form-item prop="name">
+            <el-input
+              placeholder="请输入名字"
+              prefix-icon="el-icon-search"
+              v-model="inputData.name"
+              v-show="$store.getters.doneIsNameShow"
+            ></el-input>
+          </el-form-item>
+        </el-form>
       </div>
       <el-button
         type="primary"
@@ -44,7 +48,29 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    var validateInputName = (rule, value, callback) => {
+      var regex = new RegExp(/^[\u4e00-\u9fa5a-zA-Z ]{0,15}$/);
+      if (!regex.test(value)) {
+        callback(new Error("请输入英文或者中文!"));
+      }
+    };
+    return {
+      inputData: {
+        name: this.$store.state.name
+      },
+      rules: {
+        name: [{ validator: validateInputName, trigger: "blur" }]
+      }
+    };
+  },
+  watch: {
+    "inputData.name": function() {
+      return this.$store.commit("setSearchName", this.inputData.name);
+    }
+  }
+};
 </script>
 
 <style></style>

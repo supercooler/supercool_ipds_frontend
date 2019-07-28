@@ -165,6 +165,9 @@ export default new Vuex.Store({
     },
     saveCurrentRow(state, row) {
       state.currentRow = row;
+    },
+    setSearchName(state, name) {
+      state.name = name;
     }
   },
   actions: {
