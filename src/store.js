@@ -1,9 +1,16 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { get } from "./config/axios";
+import { get, put } from "./config/axios";
 
 Vue.use(Vuex);
-
+var validatePhone = (rule, value, callback) => {
+  var regex = new RegExp(/^[0-9]{11}$/);
+  if (!regex.test(value)) {
+    callback(new Error("请输入正确的手机号码！"));
+  } else {
+    callback();
+  }
+};
 export default new Vuex.Store({
   state: {
     type: "姓名",
@@ -50,7 +57,8 @@ export default new Vuex.Store({
         label: "女"
       }
     ],
-    parkingBoyInfo: {}
+    parkingBoyInfo: {},
+    phoneRules: { phone: [{ validator: validatePhone, trigger: "blur" }] }
   },
   getters: {
     doneType: state => {
@@ -80,11 +88,11 @@ export default new Vuex.Store({
     doneParkingBoys: state => {
       return state.parkingBoys;
     },
-    doneCenterDialogVisible: state => {
-      return state.centerDialogVisible;
-    },
     doneParkingBoyPhone: state => {
       return state.parkingBoyPhone;
+    },
+    donePhoneRules: state => {
+      return state.phoneRules;
     }
   },
   mutations: {
@@ -154,6 +162,11 @@ export default new Vuex.Store({
         : { name: context.state.name };
       get("/parking-boys", condition).then(response => {
         context.commit("setParkingBoys", response.data);
+      });
+    },
+    updateParkingBoy: (context, data) => {
+      put("/parking-boys", data).then(() => {
+        location.reload();
       });
     }
   }
