@@ -3,6 +3,7 @@ import Router from "vue-router";
 import ParkingBoy from "./pages/ParkingBoy.vue";
 import ParkingLot from "./pages/ParkingLot.vue";
 import Login from "./pages/Login.vue";
+import Home from "./pages/Home.vue";
 
 Vue.use(Router);
 
@@ -23,9 +24,18 @@ export default new Router({
       component: Login
     },
     {
-      path: "/parkingLot",
+      path: "/parking-lot",
       name: "parkingLot",
       component: ParkingLot
+    },
+    {
+      path: "/home",
+      name: "home",
+      component: Home,
+      children: [
+        { path: "parking-lot", component: ParkingLot },
+        { path: "", component: ParkingBoy }
+      ]
     }
   ]
 });

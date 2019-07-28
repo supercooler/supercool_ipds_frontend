@@ -14,6 +14,7 @@ var validatePhone = (rule, value, callback) => {
 };
 export default new Vuex.Store({
   state: {
+    userName: "",
     type: "姓名",
     name: "",
     gender: "",
@@ -138,7 +139,8 @@ export default new Vuex.Store({
     loginUser(state, res) {
       if ("msg" in res) alert(res.msg);
       else {
-        Router.push("parking-boy");
+        state.userName = res.userName;
+        Router.push("/home");
       }
     },
     setSearchName(state, data) {
