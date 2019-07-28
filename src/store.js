@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { get, post, put } from "./config/axios";
+import { get, post, put, myDelete } from "./config/axios";
 
 Vue.use(Vuex);
 var validatePhone = (rule, value, callback) => {
@@ -194,6 +194,12 @@ export default new Vuex.Store({
     loginUser: (context, user) => {
       post("/users", user).then(res => {
         context.commit("loginUser", res);
+      });
+    },
+    deleteParkingBoy: (context, id) => {
+      console.log(id);
+      myDelete("/parking-boys?id=" + id).then(res => {
+        console.log(res);
       });
     }
   }

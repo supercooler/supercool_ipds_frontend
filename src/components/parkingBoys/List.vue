@@ -53,7 +53,10 @@
               @click="$store.commit('showModifyForm', scope.row)"
               >修改</el-button
             >
-            <el-button type="danger" icon="el-icon-delete" @click="deleteRow"
+            <el-button
+              type="danger"
+              icon="el-icon-delete"
+              @click="deleteRow(scope.row)"
               >删除</el-button
             >
           </el-row>
@@ -68,13 +71,14 @@ export default {
     this.$store.dispatch("getParkingBoysFromBackend");
   },
   methods: {
-    deleteRow: function() {
+    deleteRow: function(row) {
       this.$confirm("确定删除该停车员?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
         .then(() => {
+          this.$store.dispatch("deleteParkingBoy", row.id);
           this.$message({
             type: "success",
             message: "删除成功!"
