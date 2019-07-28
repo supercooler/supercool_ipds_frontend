@@ -11,6 +11,7 @@
 
 <script>
 import LoginForm from "../components/loginUser/LoginForm.vue";
+
 export default {
   name: "login",
   components: {
@@ -26,6 +27,7 @@ export default {
   background: #bfdfff;
   margin-bottom: 50px;
 }
+
 .grid-content {
   text-align: center;
 }

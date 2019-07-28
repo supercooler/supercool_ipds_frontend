@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { post, get } from "./config/axios";
+import { get, post } from "./config/axios";
 
 Vue.use(Vuex);
 
@@ -13,14 +13,8 @@ export default new Vuex.Store({
     isNameShow: true,
     centerDialogVisible: false,
     currentRow: {},
-    tableData: [
-      {
-        id: "",
-        name: "",
-        capacity: "",
-        address: ""
-      }
-    ],
+    parkingLots: [],
+    response: {},
     redundantTableData: [
       {
         id: "",
@@ -29,7 +23,35 @@ export default new Vuex.Store({
         address: ""
       }
     ],
-    parkingBoys: [],
+    parkingBoys: [
+      {
+        id: 1,
+        name: "王小虎",
+        age: 20,
+        gender: "男",
+        workExperience: "2年",
+        phone: "13800138000",
+        status: "忙碌"
+      },
+      {
+        id: 2,
+        name: "王大虎",
+        age: 22,
+        gender: "女",
+        workExperience: "5年",
+        phone: "13800138000",
+        status: "空闲"
+      },
+      {
+        id: 3,
+        name: "王老虎",
+        age: 32,
+        gender: "男",
+        workExperience: "15年",
+        phone: "13700000000",
+        status: "空闲"
+      }
+    ],
     types: [
       {
         value: "name",
@@ -138,14 +160,12 @@ export default new Vuex.Store({
     saveCurrentRow(state, row) {
       state.currentRow = row;
     },
-    setSearchName(state, name) {
-      state.name = name;
+    setParkingLots(state, response) {
+      state.response = response;
+      state.parkingLots = response.data;
     },
-    loginUser(state, res) {
-      if ("msg" in res) alert(res.msg);
-      else {
-        alert("用户编号 ： " + res.id + " ： 登录成功！ 准备跳转地址：......");
-      }
+    setResponse(state, response) {
+      state.response = response;
     }
   },
   actions: {
@@ -162,9 +182,20 @@ export default new Vuex.Store({
         context.commit("setParkingBoys", response.data);
       });
     },
-    loginUser: (context, user) => {
-      post("/users", user).then(res => {
-        context.commit("loginUser", res);
+    getParkingLots: (context, page) => {
+      get(
+        `/parking-lots/current-page/${page.currentPage}/page-size/${
+          page.pageSize
+        }`
+      ).then(response => {
+        context.commit("setParkingLots", response);
+      });
+    },
+    createParkingLot: (context, parkingLot) => {
+      post("/parking-lots", parkingLot).then(response => {
+        if (response.status === 200) {
+          this.$message.success("添加成功！");
+        }
       });
     }
   }
