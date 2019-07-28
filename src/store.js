@@ -201,6 +201,12 @@ export default new Vuex.Store({
       post("/users", user).then(res => {
         context.commit("loginUser", res);
       });
+    },
+    deleteParkingBoy: (context, id) => {
+      console.log(id);
+      myDelete("/parking-boys?id=" + id).then(res => {
+        console.log(res);
+      });
     }
   }
 });
