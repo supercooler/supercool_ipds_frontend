@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { get, post, put, myDelete } from "./config/axios";
+import Router from "./router.js";
 
 Vue.use(Vuex);
 var validatePhone = (rule, value, callback) => {
@@ -137,8 +138,11 @@ export default new Vuex.Store({
     loginUser(state, res) {
       if ("msg" in res) alert(res.msg);
       else {
-        alert("用户编号 ： " + res.id + " ： 登录成功！ 准备跳转地址：......");
+        Router.push("parking-boy");
       }
+    },
+    setSearchName(state, data) {
+      state.name = data;
     }
   },
   actions: {
