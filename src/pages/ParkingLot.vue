@@ -23,6 +23,7 @@
       :data="
         parkingLots.slice((currentPage - 1) * pageSize, currentPage * pageSize)
       "
+      :default-sort="{ prop: 'capacity', order: 'descending' }"
       stripe
       style="text-align: center"
     >
@@ -42,7 +43,7 @@
             size="mini"
             type="danger"
             icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
+            @click="handleDelete(scope.row.id)"
             >删除
           </el-button>
         </template>
@@ -93,19 +94,25 @@ export default {
     handleEdit(parkingLot) {
       this.$refs.updateParkingLotForm.showDialog(parkingLot);
     },
-    handleDelete(parkingLot) {
-      console.log(parkingLot);
+    handleDelete(id) {
+      this.$confirm("您确定要删除吗？", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          this.$store.dispatch("deleteParkingLot", id);
+        })
+        .catch(() => {});
     },
     showAddDialog() {
       this.$refs.addParkingLotDialog.showDialog();
     },
     searchParkingLot() {
-      this.$get("/parking-lots").then(res => {
-        console.log("searchParkingLotByName");
-        this.$store.state.tableData = res.data;
-        this.$store.state.redundantTableData = res.data;
-        this.$store.commit("searchDataByName", this.text);
-      });
+      if (this.text === "") {
+        this.$store.dispatch("getParkingLots");
+      } else {
+        this.$store.dispatch("searchParkingLots", this.text);
+      }
     },
     handleSizeChange(val) {
       this.pageSize = val;

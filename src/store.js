@@ -124,13 +124,6 @@ export default new Vuex.Store({
       state.tableData = backupTable;
       state.redundantTableData = backupTable;
     },
-    searchDataByName(state, keyName) {
-      state.tableData = state.redundantTableData;
-      if (keyName != "") {
-        var searchTable = state.tableData.filter(item => item.name == keyName);
-        state.tableData = searchTable;
-      }
-    },
     saveCurrentRow(state, row) {
       state.currentRow = row;
     },
@@ -174,15 +167,25 @@ export default new Vuex.Store({
         }
       });
     },
-    updateParkingLot(state, parkingLot) {
+    updateParkingLot(context, parkingLot) {
       put("/parking-lots", parkingLot).then(response => {
-        if (response.status === 200) {
-          this.$message.success("修改成功！");
-        }
+        context.commit("setResponse", response);
+      });
+    },
+    deleteParkingLot(context, id) {
+      myDelete(`/parking-lots/${id}`).then(response => {
+        context.commit("setResponse", response);
+        location.reload();
+      });
+    },
+    searchParkingLots(context, name) {
+      get(`/parking-lots/${name}`).then(response => {
+        context.commit("setParkingLots", response);
       });
     },
     updateParkingBoy: (context, data) => {
-      put("/parking-boys", data).then(() => {
+      put("/parking-boys", data).then(response => {
+        context.commit("setResponse", response);
         location.reload();
       });
     },
