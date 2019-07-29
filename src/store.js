@@ -120,6 +120,7 @@ export default new Vuex.Store({
       state.parkingLots = response.data;
     },
     setResponse(state, response) {
+      localStorage.setItem("responseData", response.data);
       state.response = response;
     },
     loginUser(state, res) {
@@ -209,7 +210,7 @@ export default new Vuex.Store({
       });
     },
     createOrder: (context, appoinment) => {
-      post("/parking-oder", appoinment).then(response => {
+      post("/parking-orders", appoinment).then(response => {
         context.commit("setResponse", response);
       });
     }
