@@ -26,7 +26,7 @@
         ></el-option>
       </el-select>
       <div width="180" style="display:inline-block">
-        <el-form :rules="rules" :model="inputData">
+        <el-form :rules="rules" :model="inputData" @submit.native.prevent>
           <el-form-item prop="name">
             <el-input
               placeholder="请输入名字"
