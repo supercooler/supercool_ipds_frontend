@@ -38,6 +38,9 @@
         <el-form-item label="状态:">
           <el-input v-model="parkingBoyInfo.status" :disabled="true"></el-input>
         </el-form-item>
+        <el-form-item label="标签:" prop="tag">
+          <el-input v-model="parkingBoyInfo.tag"></el-input>
+        </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleClose">取 消</el-button>
@@ -81,7 +84,8 @@ export default {
             name: model.name,
             phone: model.phone,
             status: model.status,
-            workExperience: model.workExperience
+            workExperience: model.workExperience,
+            tag: model.tag
           };
           this.$store.dispatch("updateParkingBoy", data);
           this.$message.success("保存成功");

@@ -37,6 +37,18 @@
           </el-form-item>
         </el-form>
       </div>
+      <div width="180" style="display:inline-block">
+        <el-form :rules="rules" :model="inputTag">
+          <el-form-item prop="tag">
+            <el-input
+              placeholder="请输入标签"
+              prefix-icon="el-icon-search"
+              v-model="inputTag.tag"
+              v-show="$store.state.isTagShow"
+            ></el-input>
+          </el-form-item>
+        </el-form>
+      </div>
       <el-button
         type="primary"
         icon="el-icon-search"
@@ -65,10 +77,17 @@ export default {
         {
           value: "gender",
           label: "性别"
+        },
+        {
+          value: "tag",
+          label: "标签"
         }
       ],
       inputData: {
         name: this.$store.state.name
+      },
+      inputTag: {
+        tag: this.$store.state.name
       },
       rules: {
         name: [{ validator: validateInputName, trigger: "blur" }]
@@ -78,6 +97,9 @@ export default {
   watch: {
     "inputData.name": function() {
       return this.$store.commit("setSearchName", this.inputData.name);
+    },
+    "inputTag.tag": function() {
+      return this.$store.commit("setSearchTag", this.inputTag.tag);
     }
   }
 };

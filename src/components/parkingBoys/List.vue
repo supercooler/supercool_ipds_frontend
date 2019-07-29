@@ -39,6 +39,13 @@
         prop="status"
         label="状态"
       ></el-table-column>
+
+      <el-table-column prop="tag" label="标签" align="center">
+        <template slot-scope="scope">
+          <el-tag>{{ scope.row.tag }}</el-tag>
+        </template>
+      </el-table-column>
+
       <el-table-column
         align="center"
         prop="operation"

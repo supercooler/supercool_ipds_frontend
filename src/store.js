@@ -10,8 +10,10 @@ export default new Vuex.Store({
     type: "姓名",
     name: "",
     gender: "",
+    tag: "",
     isGenderShow: false,
     isNameShow: true,
+    isTagShow: false,
     centerDialogVisible: false,
     currentRow: {},
     parkingLots: [],
@@ -40,8 +42,25 @@ export default new Vuex.Store({
   },
   mutations: {
     changeType(state) {
-      state.isNameShow = state.type === "name" ? true : false;
-      state.isGenderShow = !state.isNameShow;
+      switch (state.type) {
+        case "name":
+          state.isNameShow = true;
+          state.isGenderShow = !state.isNameShow;
+          state.isTagShow = !state.isNameShow;
+          break;
+        case "gender":
+          state.isGenderShow = true;
+          state.isNameShow = !state.isGenderShow;
+          state.isTagShow = !state.isGenderShow;
+          break;
+        case "tag":
+          state.isTagShow = true;
+          state.isNameShow = !state.isTagShow;
+          state.isGenderShow = !state.isTagShow;
+          break;
+      }
+      // state.isNameShow = state.type === "name" ? true : false;
+      // state.isGenderShow = !state.isNameShow;
     },
     showModifyForm(state, row) {
       state.parkingBoyInfo = {
@@ -51,7 +70,8 @@ export default new Vuex.Store({
         gender: row.gender,
         workExperience: row.workExperience,
         phone: row.phone,
-        status: row.status
+        status: row.status,
+        tag: row.tag
       };
       state.centerDialogVisible = true;
     },
@@ -93,6 +113,9 @@ export default new Vuex.Store({
     },
     setSearchName(state, data) {
       state.name = data;
+    },
+    setSearchTag(state, data) {
+      state.tag = data;
     }
   },
   actions: {
@@ -102,9 +125,15 @@ export default new Vuex.Store({
       });
     },
     searchParkingBoys: context => {
-      let condition = context.state.isGenderShow
-        ? { gender: context.state.gender }
-        : { name: context.state.name };
+      // let condition = context.state.isGenderShow
+      //   ? { gender: context.state.gender }
+      //   : { name: context.state.name };
+      let condition;
+      if (context.state.isGenderShow)
+        condition = { gender: context.state.gender };
+      else if (context.state.isNameShow)
+        condition = { name: context.state.name };
+      else condition = { tag: context.state.tag };
       get("/parking-boys", condition).then(response => {
         context.commit("setParkingBoys", response.data);
       });
