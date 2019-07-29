@@ -12,7 +12,7 @@
         <router-view></router-view>
       </el-main>
     </el-container>
-    <el-footer>@super cool</el-footer>
+    <el-footer>super cool</el-footer>
   </el-container>
 </template>
 

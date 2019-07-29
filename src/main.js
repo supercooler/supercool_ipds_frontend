@@ -5,6 +5,8 @@ import store from "./store";
 import { post, get, myDelete, put } from "./config/axios";
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
+import Vant from "vant";
+import "vant/lib/index.css";
 
 Vue.prototype.$get = get;
 Vue.prototype.$post = post;
@@ -13,6 +15,7 @@ Vue.prototype.$put = put;
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
+Vue.use(Vant);
 
 new Vue({
   router,

@@ -158,6 +158,11 @@ export default new Vuex.Store({
       myDelete("/parking-boys?id=" + id).then(() => {
         location.reload();
       });
+    },
+    createOrder: (context, appoinment) => {
+      post("/parking-oder", appoinment).then(response => {
+        context.commit("setResponse", response);
+      });
     }
   }
 });

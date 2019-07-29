@@ -4,6 +4,7 @@ import ParkingBoy from "./pages/ParkingBoy.vue";
 import ParkingLot from "./pages/ParkingLot.vue";
 import Login from "./pages/Login.vue";
 import Home from "./pages/Home.vue";
+import CustomerMobile from "./pages/mobile/customer/CustomerMobile";
 
 Vue.use(Router);
 
@@ -36,6 +37,11 @@ export default new Router({
         { path: "parking-lot", component: ParkingLot },
         { path: "", component: ParkingBoy }
       ]
+    },
+    {
+      path: "/customer-mobile",
+      name: "customer-mobile",
+      component: CustomerMobile
     }
   ]
 });
