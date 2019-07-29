@@ -40,6 +40,13 @@
             maxlength="11"
           ></el-input>
         </el-form-item>
+        <el-form-item label="标签：" prop="tag">
+          <el-input
+            placeholder="可以给他（她）加点标签哦！"
+            v-model="addForm.tag"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
       </el-form>
       <div class="dialog-footer">
         <el-button type="primary" @click="addParkingBoy('addForm')"
@@ -92,12 +99,14 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           let model = this.$refs[formName].model;
+          let tag = model.tag == null ? "普通员工" : model.tag;
           let data = {
             age: model.age,
             gender: model.gender,
             name: model.name,
             phone: model.phone,
-            workExperience: model.workExperience
+            workExperience: model.workExperience,
+            tag: tag
           };
           this.$store.dispatch("addParkingBoy", data);
           this.$store.state.dialogFormVisible = false;

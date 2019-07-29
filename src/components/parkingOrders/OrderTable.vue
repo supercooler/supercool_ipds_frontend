@@ -1,50 +1,37 @@
 <template>
-  <div id="list">
-    <el-table
-      :data="$store.state.parkingBoys"
-      style="width: 100%"
-      border
-      :default-sort="{ prop: 'age', order: 'ascending' }"
-    >
+  <div>
+    <el-table :data="$store.state.parkingOrders" style="width: 100%" border>
       <el-table-column align="center" prop="id" label="id"></el-table-column>
       <el-table-column
         align="center"
-        prop="name"
-        label="姓名"
+        prop="state"
+        label="订单状态"
       ></el-table-column>
       <el-table-column
         align="center"
-        prop="age"
-        label="年龄"
-        sortable
+        prop="carLisenceNumber"
+        label="车牌号"
       ></el-table-column>
       <el-table-column
         align="center"
-        prop="gender"
-        label="性别"
-        sortable
+        prop="userPhone"
+        label="用户联系电话"
       ></el-table-column>
       <el-table-column
         align="center"
-        prop="workExperience"
-        label="工作年限"
+        prop="preLocation"
+        label="停车场地点"
       ></el-table-column>
       <el-table-column
         align="center"
-        prop="phone"
-        label="手机号码"
+        prop="score"
+        label="停车收费"
       ></el-table-column>
       <el-table-column
         align="center"
-        prop="status"
-        label="状态"
+        prop="parking_boy_id"
+        label="停车员编号"
       ></el-table-column>
-
-      <el-table-column prop="tag" label="标签" align="center">
-        <template slot-scope="scope">
-          <el-tag>{{ scope.row.tag }}</el-tag>
-        </template>
-      </el-table-column>
 
       <el-table-column
         align="center"
@@ -54,12 +41,6 @@
       >
         <template slot-scope="scope">
           <el-row>
-            <el-button
-              type="primary"
-              icon="el-icon-edit"
-              @click="$store.commit('showModifyForm', scope.row)"
-              >修改</el-button
-            >
             <el-button
               type="danger"
               icon="el-icon-delete"
@@ -74,9 +55,6 @@
 </template>
 <script>
 export default {
-  mounted() {
-    this.$store.dispatch("getParkingBoysFromBackend");
-  },
   methods: {
     deleteRow: function(row) {
       this.$confirm("确定删除该停车员?", "提示", {

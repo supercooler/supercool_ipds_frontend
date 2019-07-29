@@ -20,7 +20,7 @@
       </el-menu-item>
       <el-menu-item index="3" @click="locationView(3)">
         <i class="el-icon-setting"></i>
-        <span slot="title">停车场 Dash Board</span>
+        <span slot="title">订单管理</span>
       </el-menu-item>
     </el-menu>
   </el-row>
@@ -48,6 +48,8 @@ export default {
           this.$router.push("/home/parking-lot");
           break;
         case 3:
+          this.$router.push("/home/parking-order");
+          break;
       }
     }
   }
