@@ -1,5 +1,5 @@
 <template>
-  <div id="LoginForm">
+  <div id="LoginForm" @keydown.enter="submitForm('ruleForm')">
     <el-form
       :model="ruleForm"
       status-icon

@@ -1,6 +1,6 @@
 <template>
   <el-dialog title="修改停车场" :visible.sync="dialogFormVisible" width="400px">
-    <el-form :model="parkingLot" ref="addForm" :rules="rules">
+    <el-form :model="parkingLot" ref="updateForm" :rules="rules">
       <el-form-item
         label="修改后的名字："
         prop="name"
@@ -22,8 +22,8 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="updateParkingLot">确定</el-button>
-        <el-button @click="cancelForm">取消</el-button>
+        <el-button type="primary" @click="updateParkingLot()">确定</el-button>
+        <el-button @click="cancelForm('updateForm')">取消</el-button>
       </el-form-item>
     </el-form>
   </el-dialog>
@@ -70,7 +70,8 @@ export default {
       this.dialogFormVisible = true;
       this.parkingLot = parkingLot;
     },
-    cancelForm() {
+    cancelForm(formName) {
+      this.$refs[formName].resetFields();
       this.dialogFormVisible = false;
     },
     async updateParkingLot() {

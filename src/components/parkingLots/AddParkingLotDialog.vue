@@ -92,8 +92,8 @@ export default {
       this.dialogFormVisible = false;
     },
     cancelForm(formName) {
-      this.dialogFormVisible = false;
       this.$refs[formName].resetFields();
+      this.dialogFormVisible = false;
     },
     showDialog() {
       this.dialogFormVisible = true;
