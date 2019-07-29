@@ -10,7 +10,7 @@
         label-position="right"
         label-width="80px"
         :model="parkingBoyInfo"
-        :rules="$store.getters.donePhoneRules"
+        :rules="phoneRules"
         ref="modifyForm"
         :before-close="handleClose"
       >
@@ -50,9 +50,22 @@
 </template>
 <script>
 export default {
+  data() {
+    var validatePhone = (rule, value, callback) => {
+      var regex = new RegExp(/^[0-9]{11}$/);
+      if (!regex.test(value)) {
+        callback(new Error("请输入正确的手机号码！"));
+      } else {
+        callback();
+      }
+    };
+    return {
+      phoneRules: { phone: [{ validator: validatePhone, trigger: "blur" }] }
+    };
+  },
   computed: {
     parkingBoyInfo: function() {
-      return this.$store.getters.doneParkingBoyInfo;
+      return this.$store.state.parkingBoyInfo;
     }
   },
   methods: {

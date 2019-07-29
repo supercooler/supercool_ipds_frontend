@@ -7,7 +7,7 @@
         @change="$store.commit('changeType')"
       >
         <el-option
-          v-for="item in $store.getters.doneTypes"
+          v-for="item in types"
           :key="item.value"
           :label="item.label"
           :value="item.value"
@@ -16,10 +16,10 @@
       <el-select
         v-model="$store.state.gender"
         placeholder="请选择性别"
-        v-show="$store.getters.doneIsGenderShow"
+        v-show="$store.state.isGenderShow"
       >
         <el-option
-          v-for="item in $store.getters.doneGenders"
+          v-for="item in $store.state.genders"
           :key="item.value"
           :label="item.label"
           :value="item.label"
@@ -32,7 +32,7 @@
               placeholder="请输入名字"
               prefix-icon="el-icon-search"
               v-model="inputData.name"
-              v-show="$store.getters.doneIsNameShow"
+              v-show="$store.state.isNameShow"
             ></el-input>
           </el-form-item>
         </el-form>
@@ -57,6 +57,16 @@ export default {
       }
     };
     return {
+      types: [
+        {
+          value: "name",
+          label: "姓名"
+        },
+        {
+          value: "gender",
+          label: "性别"
+        }
+      ],
       inputData: {
         name: this.$store.state.name
       },

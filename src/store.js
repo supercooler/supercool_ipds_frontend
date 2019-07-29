@@ -4,14 +4,6 @@ import { get, post, put, myDelete } from "./config/axios";
 import Router from "./router.js";
 
 Vue.use(Vuex);
-var validatePhone = (rule, value, callback) => {
-  var regex = new RegExp(/^[0-9]{11}$/);
-  if (!regex.test(value)) {
-    callback(new Error("请输入正确的手机号码！"));
-  } else {
-    callback();
-  }
-};
 export default new Vuex.Store({
   state: {
     userName: "",
@@ -33,16 +25,6 @@ export default new Vuex.Store({
       }
     ],
     parkingBoys: [],
-    types: [
-      {
-        value: "name",
-        label: "姓名"
-      },
-      {
-        value: "gender",
-        label: "性别"
-      }
-    ],
     genders: [
       {
         value: "male",
@@ -54,43 +36,7 @@ export default new Vuex.Store({
       }
     ],
     parkingBoyInfo: {},
-    phoneRules: { phone: [{ validator: validatePhone, trigger: "blur" }] },
     dialogFormVisible: false
-  },
-  getters: {
-    doneType: state => {
-      return state.type;
-    },
-    doneTypes: state => {
-      return state.types;
-    },
-    doneGenders: state => {
-      return state.genders;
-    },
-    doneGender: state => {
-      return state.gender;
-    },
-    doneIsGenderShow: state => {
-      return state.isGenderShow;
-    },
-    doneIsNameShow: state => {
-      return state.isNameShow;
-    },
-    doneName: state => {
-      return state.name;
-    },
-    doneParkingBoyInfo: state => {
-      return state.parkingBoyInfo;
-    },
-    doneParkingBoys: state => {
-      return state.parkingBoys;
-    },
-    doneParkingBoyPhone: state => {
-      return state.parkingBoyPhone;
-    },
-    donePhoneRules: state => {
-      return state.phoneRules;
-    }
   },
   mutations: {
     changeType(state) {

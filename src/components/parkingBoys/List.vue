@@ -1,7 +1,7 @@
 <template>
   <div id="list">
     <el-table
-      :data="$store.getters.doneParkingBoys"
+      :data="$store.state.parkingBoys"
       style="width: 100%"
       border
       :default-sort="{ prop: 'age', order: 'ascending' }"
