@@ -79,8 +79,6 @@ export default new Vuex.Store({
           state.isGenderShow = !state.isTagShow;
           break;
       }
-      // state.isNameShow = state.type === "name" ? true : false;
-      // state.isGenderShow = !state.isNameShow;
     },
     showModifyForm(state, row) {
       state.parkingBoyInfo = {
@@ -146,9 +144,6 @@ export default new Vuex.Store({
       });
     },
     searchParkingBoys: context => {
-      // let condition = context.state.isGenderShow
-      //   ? { gender: context.state.gender }
-      //   : { name: context.state.name };
       let condition;
       if (context.state.isGenderShow)
         condition = { gender: context.state.gender };
