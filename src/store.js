@@ -137,10 +137,12 @@ export default new Vuex.Store({
       state.response = response;
     },
     loginUser(state, res) {
-      if ("msg" in res) alert(res.msg);
-      else {
-        localStorage.setItem("userName", JSON.stringify(res.userName));
+      if (res.msg == null) {
+        let user = res.data;
+        localStorage.setItem("userName", JSON.stringify(user.userName));
         Router.push("/home");
+      } else {
+        alert(res.msg);
       }
     },
     setSearchName(state, data) {
