@@ -77,6 +77,14 @@ export default {
         callback();
       }
     };
+    var validateNumber1 = (rule, value, callback) => {
+      var regex = new RegExp(/^[0-9]{2}$/);
+      if (!regex.test(value)) {
+        callback(new Error("请输入正确的工作年限！"));
+      } else {
+        callback();
+      }
+    };
     return {
       addForm: {},
       rules: {
@@ -86,7 +94,7 @@ export default {
         ],
         age: [{ required: true, trigger: "blur", validator: validateNumber }],
         workExperience: [
-          { required: true, trigger: "blur", validator: validateNumber }
+          { required: true, trigger: "blur", validator: validateNumber1 }
         ],
         phone: [{ validator: validatePhone, trigger: "blur", required: true }],
         gender: [{ required: true, message: "请选择性别", trigger: "blur" }]
