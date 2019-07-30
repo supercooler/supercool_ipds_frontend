@@ -50,7 +50,7 @@ export default {
       parkingOrder: {
         carLisenceNumber: "",
         parkingLot: {},
-        parkingBoy: {},
+        parkingBoy: {}
       },
       isFetchCarDisable: false
     };
@@ -66,14 +66,13 @@ export default {
   methods: {
     fetchCar() {
       this.isFetchCarDisable = true;
-      this.$store.state.statusBarCount=4;
+      this.$store.state.statusBarCount = 4;
       this.$store.dispatch("fetchCar");
     }
   },
   mounted() {
     this.parkingOrder = this.$store.state.parkingOrder;
-    this.$store.state.parkingOrders.forEach(item => {
-    })
+    this.$store.state.parkingOrders.forEach(item => {});
   }
 };
 </script>

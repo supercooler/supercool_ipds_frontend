@@ -42,7 +42,7 @@ export default new Vuex.Store({
     dialogFormVisible: false,
     parkingOrders: [],
     parkingOrder: {},
-    statusBarCount:0
+    statusBarCount: 0
   },
   mutations: {
     changeType(state) {

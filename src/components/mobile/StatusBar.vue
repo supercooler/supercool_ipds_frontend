@@ -16,12 +16,12 @@
 </template>
 
 <script>
-  import Constant from "@/common/constance.js";
+import Constant from "@/common/constance.js";
 export default {
   name: "StatusBar",
   data() {
     return {
-      status:[
+      status: [
         {
           content: Constant.HAD_ORDERED,
           type: "primary",
@@ -50,10 +50,10 @@ export default {
       ]
     };
   },
-  beforeMount(){
-    for (let i = 0; i <this.$store.state.statusBarCount ; i++) {
-      console.log(this.$store.state.statusBarCount)
-      this.status[i].color="#0bbd87";
+  beforeMount() {
+    for (let i = 0; i < this.$store.state.statusBarCount; i++) {
+      console.log(this.$store.state.statusBarCount);
+      this.status[i].color = "#0bbd87";
     }
   }
 };

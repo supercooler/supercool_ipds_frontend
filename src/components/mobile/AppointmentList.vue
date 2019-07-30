@@ -31,22 +31,22 @@ export default {
     showOrder(row) {
       switch (row.status) {
         case Constant.HAD_ORDERED:
-          this.$store.state.statusBarCount=1;
+          this.$store.state.statusBarCount = 1;
           break;
         case Constant.HAD_DISPATCHED:
-          this.$store.state.statusBarCount=2;
+          this.$store.state.statusBarCount = 2;
           break;
         case Constant.HAD_CAR_STOPED:
-          this.$store.state.statusBarCount=3;
+          this.$store.state.statusBarCount = 3;
           break;
         case Constant.IN_FETCHING_CAR:
-          this.$store.state.statusBarCount=4;
+          this.$store.state.statusBarCount = 4;
           break;
         case Constant.WILL_BE_CONFIRMED:
-          this.$store.state.statusBarCount=5;
+          this.$store.state.statusBarCount = 5;
           break;
         case Constant.FINISH_FETCHING:
-          this.$store.state.statusBarCount=6;
+          this.$store.state.statusBarCount = 6;
           break;
       }
       this.$router.push("/customer-mobile/parking-order-mobile");
