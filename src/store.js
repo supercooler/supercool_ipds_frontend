@@ -19,6 +19,33 @@ export default new Vuex.Store({
     currentRow: {},
     parkingLots: [],
     response: {},
+    activities: [
+      {
+        content: Constant.HAD_ORDERED,
+        type: "primary",
+        color: "#DCDCDC"
+      },
+      {
+        content: Constant.HAD_DISPATCHED,
+        color: "#DCDCDC"
+      },
+      {
+        content: Constant.HAD_CAR_STOPED,
+        color: "#DCDCDC"
+      },
+      {
+        content: Constant.IN_FETCHING_CAR,
+        color: "#DCDCDC"
+      },
+      {
+        content: Constant.WILL_BE_CONFIRMED,
+        color: "#DCDCDC"
+      },
+      {
+        content: Constant.FINISH_FETCHING,
+        color: "#DCDCDC"
+      }
+    ],
     redundantTableData: [
       {
         id: "",
@@ -224,6 +251,15 @@ export default new Vuex.Store({
     searchParkingOrders: (context, info) => {
       get("/parking-orders" + info).then(response => {
         context.commit("setParkingOrders", response.data);
+      });
+    },
+    fetchCar: context => {
+      put("/parking-orders", context.state.response.data).then(response => {
+        if (response.status == 200) {
+          context.state.response.data = response.body;
+          context.state.activities[3].color = "#0bbd87";
+          location.reload();
+        }
       });
     }
   }
