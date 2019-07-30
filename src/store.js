@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import { get, post, put, myDelete } from "./config/axios";
 import Router from "./router.js";
-
+import Constant from "@/common/constance.js";
 
 Vue.use(Vuex);
 export default new Vuex.Store({

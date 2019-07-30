@@ -10,7 +10,6 @@
           status-icon
           ref="ruleForm"
           label-width="100px"
-          class="demo-ruleForm"
         >
           <el-form-item label="车牌号:">
             <el-tag>{{ parkingOrder.carLisenceNumber }}</el-tag>
