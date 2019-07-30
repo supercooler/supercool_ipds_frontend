@@ -1,5 +1,6 @@
 <template>
   <div
+    id="order_form"
     align="right"
     @keydown.enter="submitForm('ruleForm')"
     style="float:right;"
@@ -174,3 +175,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+#order_form {
+  margin-bottom: 30px;
+}
+</style>

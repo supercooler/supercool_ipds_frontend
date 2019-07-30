@@ -1,6 +1,15 @@
 <template>
   <div>
-    <el-table :data="$store.state.parkingOrders" style="width: 100%" border>
+    <el-table
+      :data="
+        $store.state.parkingOrders.slice(
+          (currentPage - 1) * pageSize,
+          currentPage * pageSize
+        )
+      "
+      style="width: 100%"
+      border
+    >
       <el-table-column align="center" prop="id" label="id"></el-table-column>
       <el-table-column
         align="center"
