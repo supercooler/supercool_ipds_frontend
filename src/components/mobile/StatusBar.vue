@@ -9,7 +9,8 @@
         :color="activity.color"
         :size="activity.size"
         :timestamp="activity.timestamp"
-      >{{ activity.content }}</el-timeline-item>
+        >{{ activity.content }}</el-timeline-item
+      >
     </el-timeline>
   </div>
 </template>

@@ -62,7 +62,8 @@ export default {
         plateNumber: "",
         phone: "",
         address: "",
-        bookTime: ""
+        bookTime: "",
+        user: {}
       },
       isCheck: true,
       inputStatus: { plateNumber: false, phone: false, address: false },
@@ -106,7 +107,6 @@ export default {
       })
         .then(() => {
           this.$store.dispatch("createOrder", this.appointmentDto).then(() => {
-            this.$router.push("/customer-mobile/parking-order-mobile");
             this.$emit("changActive", 1);
             this.appointmentDto = {};
           });
@@ -124,6 +124,9 @@ export default {
     onClickRight() {
       this.$alert("结束");
     }
+  },
+  mounted() {
+    this.appointmentDto.user = JSON.parse(localStorage.getItem("user"));
   }
 };
 </script>

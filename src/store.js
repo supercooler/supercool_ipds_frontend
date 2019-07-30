@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import { get, post, put, myDelete } from "./config/axios";
 import Router from "./router.js";
-
+import Constant from "@/common/constance.js";
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -138,6 +138,9 @@ export default new Vuex.Store({
     },
     setUser(state, data) {
       localStorage.setItem("user", JSON.stringify(data));
+    },
+    setParkingOrder(state, data) {
+      state.parkingOrder = data;
     }
   },
   actions: {
@@ -164,8 +167,8 @@ export default new Vuex.Store({
     },
     createParkingLot: (context, parkingLot) => {
       post("/parking-lots", parkingLot).then(response => {
-        if (response.status === 200) {
-          this.$message.success("添加成功！");
+        if (response.status === "") {
+          alert("添加成功！");
         }
       });
     },
@@ -207,8 +210,13 @@ export default new Vuex.Store({
       });
     },
     createOrder: (context, appoinment) => {
-      post("/parking-orders", appoinment).then(response => {
-        context.commit("setResponse", response);
+      post("/parking-orders", appoinment).then(function(response) {
+        if (response.code === null) {
+          Router.push("/customer-mobile/parking-order-mobile");
+          context.commit("setParkingOrder", response.data);
+        } else {
+          alert(response.msg);
+        }
       });
     },
     getParkingOrderList: context => {
@@ -231,11 +239,13 @@ export default new Vuex.Store({
         context.commit("setParkingOrders", response.data);
       });
     },
-    fetchCar: context => {
-      context.state.response.data.status=Constant.IN_FETCHING_CAR;
-      put("/parking-orders", context.state.response.data).then(response => {
-        context.state.response.data = response.data;
-        location.reload();
+    updateOrderStatus: (context, parkingOrder) => {
+      put("/parking-orders", parkingOrder).then(response => {
+        if (response.code === null) {
+          context.commit("setParkingOrder", response.data);
+        } else {
+          alert(response.msg);
+        }
       });
     },
     getParkingByUserId: (context, id) => {
@@ -248,6 +258,8 @@ export default new Vuex.Store({
         context.commit("setUser", response.data);
         if (response.code === null) {
           Router.push("/customer-mobile");
+        } else {
+          alert(response.msg);
         }
       });
     }
