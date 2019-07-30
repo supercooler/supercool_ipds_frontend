@@ -10,7 +10,7 @@
         label-position="right"
         label-width="80px"
         :model="parkingBoyInfo"
-        :rules="$store.getters.donePhoneRules"
+        :rules="phoneRules"
         ref="modifyForm"
         :before-close="handleClose"
       >
@@ -38,6 +38,9 @@
         <el-form-item label="状态:">
           <el-input v-model="parkingBoyInfo.status" :disabled="true"></el-input>
         </el-form-item>
+        <el-form-item label="标签:" prop="tag">
+          <el-input v-model="parkingBoyInfo.tag"></el-input>
+        </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleClose">取 消</el-button>
@@ -50,9 +53,22 @@
 </template>
 <script>
 export default {
+  data() {
+    var validatePhone = (rule, value, callback) => {
+      var regex = new RegExp(/^[0-9]{11}$/);
+      if (!regex.test(value)) {
+        callback(new Error("请输入正确的手机号码！"));
+      } else {
+        callback();
+      }
+    };
+    return {
+      phoneRules: { phone: [{ validator: validatePhone, trigger: "blur" }] }
+    };
+  },
   computed: {
     parkingBoyInfo: function() {
-      return this.$store.getters.doneParkingBoyInfo;
+      return this.$store.state.parkingBoyInfo;
     }
   },
   methods: {
@@ -68,7 +84,8 @@ export default {
             name: model.name,
             phone: model.phone,
             status: model.status,
-            workExperience: model.workExperience
+            workExperience: model.workExperience,
+            tag: model.tag
           };
           this.$store.dispatch("updateParkingBoy", data);
           this.$message.success("保存成功");

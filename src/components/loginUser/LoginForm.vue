@@ -20,7 +20,8 @@
           type="password"
           v-model="ruleForm.password"
           autocomplete="off"
-        ></el-input>
+        >
+        </el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')"
@@ -80,3 +81,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+>>> .el-form-item__label {
+  font-size: 20px;
+  color: white;
+}
+</style>

@@ -15,7 +15,7 @@
         </el-form-item>
         <el-form-item label="年龄：" prop="age">
           <el-input
-            v-model="addForm.age"
+            v-model.number="addForm.age"
             autocomplete="off"
             maxlength="2"
           ></el-input>
@@ -28,16 +28,23 @@
         </el-form-item>
         <el-form-item label="工作年限：" prop="workExperience">
           <el-input
-            v-model="addForm.workExperience"
+            v-model.number="addForm.workExperience"
             autocomplete="off"
             maxlength="2"
           ></el-input>
         </el-form-item>
         <el-form-item label="联系方式：" prop="phone">
           <el-input
-            v-model="addForm.phone"
+            v-model.number="addForm.phone"
             autocomplete="off"
             maxlength="11"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="标签：" prop="tag">
+          <el-input
+            placeholder="可以给他（她）加点标签哦！"
+            v-model="addForm.tag"
+            autocomplete="off"
           ></el-input>
         </el-form-item>
       </el-form>
@@ -54,6 +61,30 @@
 <script>
 export default {
   data() {
+    var validatePhone = (rule, value, callback) => {
+      var regex = new RegExp(/^[0-9]{11}$/);
+      if (!regex.test(value)) {
+        callback(new Error("请输入正确的手机号码！"));
+      } else {
+        callback();
+      }
+    };
+    var validateNumber = (rule, value, callback) => {
+      var regex = new RegExp(/^[0-9]{2}$/);
+      if (!regex.test(value)) {
+        callback(new Error("请输入正确的年龄！"));
+      } else {
+        callback();
+      }
+    };
+    var validateNumber1 = (rule, value, callback) => {
+      var regex = new RegExp(/^[0-9]{2}$/);
+      if (!regex.test(value)) {
+        callback(new Error("请输入正确的工作年限！"));
+      } else {
+        callback();
+      }
+    };
     return {
       addForm: {},
       rules: {
@@ -61,18 +92,11 @@ export default {
           { required: true, message: "请输入停车员名称", trigger: "blur" },
           { min: 1, max: 15, message: "长度在 1 到 15 个字符", trigger: "blur" }
         ],
-        age: [
-          { required: true, message: "请填写停车员年龄", trigger: "blur" },
-          { min: 1, max: 2, message: "年龄在0-99之间", trigger: "blur" }
-        ],
+        age: [{ required: true, trigger: "blur", validator: validateNumber }],
         workExperience: [
-          { required: true, message: "请填写停车员工作年限", trigger: "blur" },
-          { min: 1, max: 2, message: "工作年限在0-99之间", trigger: "blur" }
+          { required: true, trigger: "blur", validator: validateNumber1 }
         ],
-        phone: [
-          { required: true, message: "请填写停车员手机号码", trigger: "blur" },
-          { min: 11, max: 11, message: "手机号码为11位", trigger: "blur" }
-        ],
+        phone: [{ validator: validatePhone, trigger: "blur", required: true }],
         gender: [{ required: true, message: "请选择性别", trigger: "blur" }]
       }
     };
@@ -83,18 +107,19 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           let model = this.$refs[formName].model;
+          let tag = model.tag == null ? "普通员工" : model.tag;
           let data = {
             age: model.age,
             gender: model.gender,
             name: model.name,
             phone: model.phone,
-            workExperience: model.workExperience
+            workExperience: model.workExperience,
+            tag: tag
           };
           this.$store.dispatch("addParkingBoy", data);
           this.$store.state.dialogFormVisible = false;
         } else {
-          this.$message.error("Error");
-          this.$refs[formName].resetFields();
+          this.$message.error("添加失败！");
         }
       });
     },
