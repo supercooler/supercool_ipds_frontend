@@ -78,7 +78,7 @@ export default {
       }
     };
     var validateNumber1 = (rule, value, callback) => {
-      var regex = new RegExp(/^[0-9]{2}$/);
+      var regex = new RegExp(/^[0-9]{1,2}$/);
       if (!regex.test(value)) {
         callback(new Error("请输入正确的工作年限！"));
       } else {
