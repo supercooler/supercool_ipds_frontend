@@ -4,7 +4,7 @@
       <el-table-column align="center" prop="id" label="id"></el-table-column>
       <el-table-column
         align="center"
-        prop="state"
+        prop="status"
         label="订单状态"
       ></el-table-column>
       <el-table-column
@@ -20,7 +20,7 @@
       <el-table-column
         align="center"
         prop="preLocation"
-        label="停车场地点"
+        label="预约地点"
       ></el-table-column>
       <el-table-column
         align="center"
@@ -29,10 +29,14 @@
       ></el-table-column>
       <el-table-column
         align="center"
-        prop="parking_boy_id"
-        label="停车员编号"
+        prop="parkingBoy.name"
+        label="停车员姓名"
       ></el-table-column>
-
+      <el-table-column
+        align="center"
+        prop="parkingLot.name"
+        label="停车场名称"
+      ></el-table-column>
       <el-table-column
         align="center"
         prop="operation"
@@ -51,10 +55,25 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      style="text-align: right"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-size="pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="$store.state.parkingOrders.length"
+    ></el-pagination>
   </div>
 </template>
 <script>
 export default {
+  data() {
+    return {
+      currentPage: 1,
+      pageSize: 10
+    };
+  },
   methods: {
     deleteRow: function(row) {
       this.$confirm("确定删除该订单?", "提示", {
@@ -70,7 +89,16 @@ export default {
           });
         })
         .catch(() => {});
+    },
+    handleSizeChange(val) {
+      this.pageSize = val;
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
     }
+  },
+  mounted() {
+    this.$store.dispatch("getParkingOrders");
   }
 };
 </script>
