@@ -12,6 +12,7 @@ import AppointmentList from "./components/mobile/AppointmentList";
 import ParkingBoyMobile from "./pages/mobile/parkingBoy/ParkingBoyMobile";
 import UserInformationMobile from "./components/mobile/UserInformationMobile";
 import CustomerLoginMobile from "./pages/mobile/customer/CustomerLoginMobile";
+import RegisterUser from "./pages/mobile/customer/RegisterUser";
 
 Vue.use(Router);
 
@@ -84,6 +85,11 @@ export default new Router({
       path: "/customer-login-mobile",
       name: "CustomerLoginMobile",
       component: CustomerLoginMobile
+    },
+    {
+      path: "/register-user",
+      name: "RegisterUser",
+      component: RegisterUser
     }
   ]
 });

@@ -135,6 +135,9 @@ export default new Vuex.Store({
     },
     setParkingOrders(state, data) {
       state.parkingOrders = data;
+    },
+    setUser(state, data) {
+      localStorage.setItem("user", JSON.stringify(data));
     }
   },
   actions: {
@@ -235,8 +238,16 @@ export default new Vuex.Store({
       });
     },
     getParkingByUserId: (context, id) => {
-      get(`/parking-orders/${id}`).then(response => {
+      get(`/parking-orders/user/${id}`).then(response => {
         context.commit("setParkingOrders", response.data);
+      });
+    },
+    registerUser: (context, user) => {
+      post("/users/register", user).then(response => {
+        context.commit("setUser", response.data);
+        if (response.code === null) {
+          Router.push("/customer-mobile");
+        }
       });
     }
   }

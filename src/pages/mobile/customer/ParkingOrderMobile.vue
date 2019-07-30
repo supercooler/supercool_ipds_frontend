@@ -72,7 +72,7 @@ export default {
   },
   mounted() {
     this.parkingOrder = this.$store.state.parkingOrder;
-    this.$store.state.parkingOrders.forEach(item => {});
+    this.$store.state.parkingOrders.forEach(() => {});
   }
 };
 </script>

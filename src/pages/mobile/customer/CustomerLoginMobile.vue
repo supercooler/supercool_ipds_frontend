@@ -34,7 +34,8 @@
               @click="submitForm('loginForm')"
               >提交</el-button
             >
-            <el-button @click="resetForm('loginForm')">重置</el-button>
+            <el-button @click="resetForm('loginForm')">重置</el-button><br />
+            <a href="#" @click="locationRegister">注册</a>
           </el-form-item>
         </el-form>
       </div>
@@ -94,6 +95,9 @@ export default {
           this.$router.push("/parking-boy-mobile");
           break;
       }
+    },
+    locationRegister() {
+      this.$router.push("/register-user");
     }
   }
 };
