@@ -1,13 +1,21 @@
 <template>
   <div style="text-align: center">
-    <nav-bar title="智能派单停车系统" left-arrow class="nav-bar"></nav-bar>
-    <h1>我是一个莫得感情的Parking Boy</h1>
-    <br /><van-icon name="fire"></van-icon>
+    <nav-bar title="智能派单停车系统" left-arrow class="nav-bar" @click-left="onClickLeft"></nav-bar>
+    <router-view></router-view>
     <van-tabbar v-model="active">
-      <van-tabbar-item icon="home-o">首页</van-tabbar-item>
-      <van-tabbar-item icon="friends-o" :info="infoMessage"
-        >新订单</van-tabbar-item
-      >
+      <van-tabbar-item icon="home-o" @click="clickHomePage">首页</van-tabbar-item>
+      <van-tabbar-item icon="friends-o" :info="infoMessage" @click="clickStopOrderItem">停车订单</van-tabbar-item>
+      <template v-if="willDeal !== 0">
+        <van-tabbar-item
+          icon="friends-o"
+          :info="willDeal"
+          id="fetchOrder"
+          @click="clickFetchOrderItem"
+        >取车订单</van-tabbar-item>
+      </template>
+      <template v-else>
+        <van-tabbar-item icon="friends-o" id="fetchOrder" @click="clickFetchOrderItem">取车订单</van-tabbar-item>
+      </template>
     </van-tabbar>
   </div>
 </template>
@@ -22,13 +30,51 @@ export default {
   data() {
     return {
       infoMessage: "",
-      active: 0
+      active: 0,
+      willDeal: 0,
+      fetchCarOrders: []
     };
   },
+  watch: {
+    fetchCarOrders: function() {
+      this.willDeal = this.fetchCarOrders.filter(
+        item => item.status === "已停车"
+      ).length;
+    }
+  },
   mounted() {
-    let result = localStorage.getItem("WebSocket");
-    if (result !== null) {
-      this.infoMessage = "1";
+    if (this.timer) {
+      clearInterval(this.timer);
+    } else {
+      this.timer = setInterval(() => {
+        this.getParkingOrdersByTimer();
+      }, 1000);
+    }
+  },
+  methods: {
+    getParkingOrdersByTimer() {
+      let parkingBoyName = JSON.parse(localStorage.getItem("user")).userName;
+      this.$get(`/parking-orders/fetch?parkingBoyName=${parkingBoyName}`).then(
+        res => {
+          this.fetchCarOrders = res.data;
+        }
+      );
+    },
+    clickHomePage() {
+      this.active = 0;
+      alert("首页");
+    },
+    clickStopOrderItem() {
+      this.active = 1;
+      alert("停车订单");
+    },
+    clickFetchOrderItem() {
+      this.active = 2;
+      this.$router.push("/parking-boy-mobile/appointment-fetch-car-items-list");
+    },
+    onClickLeft() {
+      this.$router.go(-1);
+      this.active = 2;
     }
   }
 };
@@ -37,7 +83,7 @@ export default {
 <style lang="less" scoped>
 .van-nav-bar {
   height: 50px;
-  background-color: rgba(30, 44, 76, 0.93);
+  background-color: #44582d;
   color: white;
 }
 
