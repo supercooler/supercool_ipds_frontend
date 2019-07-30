@@ -57,13 +57,13 @@
 export default {
   methods: {
     deleteRow: function(row) {
-      this.$confirm("确定删除该停车员?", "提示", {
+      this.$confirm("确定删除该订单?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
         .then(() => {
-          this.$store.dispatch("deleteParkingBoy", row.id);
+          this.$store.dispatch("deleteParkingOrder", row.id);
           this.$message({
             type: "success",
             message: "删除成功!"

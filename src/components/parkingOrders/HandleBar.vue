@@ -44,6 +44,9 @@ export default {
         }
       });
     }
+  },
+  mounted() {
+    this.$store.dispatch("getParkingOrders");
   }
 };
 </script>
