@@ -1,0 +1,154 @@
+<template>
+  <div style="width:338px;margin:0 auto">
+    <span>
+      <h2 align="center">订单详情</h2>
+    </span>
+    <div>
+      <status-bar class="statusBar" :activities='activities'></status-bar>
+      <div class="fetchCar">
+        <el-form
+          status-icon
+          ref="ruleForm"
+          label-width="100px"
+          class="demo-ruleForm"
+        >
+          <el-form-item label="车牌号:">
+            <el-tag>{{ parkingOrder.carLisenceNumber }}</el-tag>
+          </el-form-item>
+          <el-form-item label="停车场:">
+            <el-tag>{{ parkingOrder.parkingLot.name }}</el-tag>
+          </el-form-item>
+          <el-form-item label="停车员:">
+            <el-tag>{{ parkingOrder.parkingBoy.name }}</el-tag>
+          </el-form-item>
+          <el-form-item label="手机号码:">
+            <el-tag>{{ parkingOrder.parkingBoy.phone }}</el-tag>
+          </el-form-item>
+          <el-form-item>
+            <el-button
+              v-if="parkingOrder.status !== '已完成'"
+              type="primary"
+              @click="fetchCar"
+              ref="fetchCarButton"
+              :disabled="isFetchCarDisable"
+              >取车</el-button
+            >
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import StatusBar from "@/components/mobile/StatusBar.vue";
+<<<<<<< Updated upstream
+
+=======
+import Constant from "@/common/constance.js";
+>>>>>>> Stashed changes
+export default {
+  name: "ParkingOrderMobile",
+  data() {
+    return {
+      parkingOrder: {
+        carLisenceNumber: "",
+        parkingLot: {},
+        parkingBoy: {}
+      },
+<<<<<<< Updated upstream
+      isFetchCarDisable: false
+=======
+      isfetchCarDisable: false,
+      activities:[
+        {
+          content: Constant.HAD_ORDERED,
+          type: "primary",
+          color: "#0bbd87"
+        },
+        {
+          content: Constant.HAD_DISPATCHED,
+          color: "#0bbd87"
+        },
+        {
+          content: Constant.HAD_CAR_STOPED,
+          color: "#0bbd87"
+        },
+        {
+          content: Constant.IN_FETCHING_CAR,
+          color: "#DCDCDC"
+        },
+        {
+          content: Constant.WILL_BE_CONFIRMED,
+          color: "#DCDCDC"
+        },
+        {
+          content: Constant.FINISH_FETCHING,
+          color: "#DCDCDC"
+        }
+      ] 
+>>>>>>> Stashed changes
+    };
+  },
+  computed: {
+    getParkingOrder() {
+      return this.$store.state.response.data;
+    }
+  },
+  components: {
+    StatusBar
+  },
+  methods: {
+    fetchCar() {
+<<<<<<< Updated upstream
+      this.isFetchCarDisable = true;
+      this.$store.state.statusBarCount = 4;
+=======
+      this.isfetchCarDisable = true;
+      this.data.activities=[
+        {
+          content: Constant.HAD_ORDERED,
+          type: "primary",
+          color: "#0bbd87"
+        },
+        {
+          content: Constant.HAD_DISPATCHED,
+          color: "#0bbd87"
+        },
+        {
+          content: Constant.HAD_CAR_STOPED,
+          color: "#0bbd87"
+        },
+        {
+          content: Constant.IN_FETCHING_CAR,
+          color: "#DCDCDC"
+        },
+        {
+          content: Constant.WILL_BE_CONFIRMED,
+          color: "#DCDCDC"
+        },
+        {
+          content: Constant.FINISH_FETCHING,
+          color: "#DCDCDC"
+        }
+      ] 
+>>>>>>> Stashed changes
+      this.$store.dispatch("fetchCar");
+    }
+  },
+  mounted() {
+    this.parkingOrder = this.$store.state.parkingOrder;
+    this.$store.state.parkingOrders.forEach(item => {});
+  }
+};
+</script>
+
+<style scoped>
+.statusBar {
+  margin-top: 10px;
+  float: left;
+}
+.fetchCar {
+  float: right;
+}
+</style>
