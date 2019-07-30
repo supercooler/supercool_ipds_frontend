@@ -225,6 +225,11 @@ export default new Vuex.Store({
       get("/parking-orders" + info).then(response => {
         context.commit("setParkingOrders", response.data);
       });
+    },
+    getParkingByUserId: (context, id) => {
+      get(`/parking-orders/${id}`).then(response => {
+        context.commit("setParkingOrders", response.data);
+      });
     }
   }
 });

@@ -4,11 +4,16 @@
     <el-table
       :data="parkingOrderList"
       :default-sort="{ prop: 'bookTime', order: 'descending' }"
+      @row-click="showOrder"
       stripe
     >
       <el-table-column prop="id" label="订单号"></el-table-column>
       <el-table-column prop="bookTime" label="预定时间"></el-table-column>
-      <el-table-column prop="status" label="状态"></el-table-column>
+      <el-table-column label="状态">
+        <template slot-scope="scope"
+          ><el-tag>{{ scope.row.status }}</el-tag></template
+        ></el-table-column
+      >
     </el-table>
   </div>
 </template>
@@ -21,16 +26,28 @@ export default {
       parkingOrder: {}
     };
   },
-  methods: {},
+  methods: {
+    showOrder(row) {
+      console.log(row);
+    }
+  },
   mounted() {
-    this.$store.dispatch("getParkingOrders");
-    this.parkingOrderList = this.$store.state.response.data;
+    let userId = JSON.parse(localStorage.getItem("user")).id;
+    this.$store.dispatch("getParkingByUserId", userId);
+  },
+  watch: {
+    "$store.state.parkingOrders"() {
+      this.parkingOrderList = this.$store.state.parkingOrders;
+    }
   }
 };
 </script>
 
 <style scoped>
 >>> .el-table th {
+  text-align: center;
+}
+>>> .el-table .cell {
   text-align: center;
 }
 </style>
