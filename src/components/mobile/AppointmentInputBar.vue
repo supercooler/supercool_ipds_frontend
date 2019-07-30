@@ -2,40 +2,58 @@
   <div>
     <div style="text-align: center">
       <span><h2>预约停车</h2></span>
-      <van-cell-group>
-        <van-field
-          v-model="appointmentDto.plateNumber"
-          label="车牌"
-          placeholder="请输入车牌"
-          :required="true"
-          :error-message="errorMessage.plateNumber"
-          size="7"
-        ></van-field>
-        <van-field
-          v-model="appointmentDto.phone"
-          type="number"
-          label="手机"
-          placeholder="请输入手机号"
-          :required="true"
-          :error-message="errorMessage.phone"
-          size="11"
-        ></van-field>
-        <van-field
-          v-model="appointmentDto.address"
-          label="预约地点"
-          placeholder="请输入预约地点"
-          :required="true"
-          :error-message="errorMessage.address"
-        ></van-field>
-      </van-cell-group>
-      <br />
+      <div>
+        <el-form
+          style="width: 255px;margin: 0 auto"
+          :model="appointmentDto"
+          ref="addForm"
+          :rules="rules"
+        >
+          <el-form-item
+            label="车牌："
+            prop="plateNumber"
+            validate-on-rule-change="true"
+          >
+            <el-input
+              v-model="appointmentDto.plateNumber"
+              autocomplete="off"
+              maxlength="15"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="电话：" prop="phone">
+            <el-input
+              v-model.number="appointmentDto.phone"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="地址：" prop="address">
+            <el-input
+              v-model="appointmentDto.address"
+              autocomplete="off"
+              maxlength="299"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="预约时间：" prop="bookTime">
+            <el-date-picker
+              v-model="appointmentDto.bookTime"
+              type="datetime"
+              placeholder="选择日期时间"
+            >
+            </el-date-picker>
+          </el-form-item>
+        </el-form>
+      </div>
+      <br /><br />
     </div>
-    <van-button type="info" @click="placeOrder">确定预约</van-button>
+    <el-button type="primary" @click="addParkingBoy('addForm')"
+      >确定预约</el-button
+    >
   </div>
 </template>
 
 <script>
 import { Dialog } from "vant";
+
 export default {
   name: "AppointmentInputBar",
   data() {
@@ -43,23 +61,43 @@ export default {
       appointmentDto: {
         plateNumber: "",
         phone: "",
-        address: ""
+        address: "",
+        bookTime: ""
       },
       isCheck: true,
       inputStatus: { plateNumber: false, phone: false, address: false },
-      errorMessage: { plateNumber: "", phone: "", address: "" }
+      errorMessage: { plateNumber: "", phone: "", address: "" },
+      rules: {
+        plateNumber: [
+          { required: true, message: "请输入车牌号", trigger: "blur" }
+        ],
+        phone: [
+          { required: true, message: "请填写电话号码", trigger: "blur" },
+          { type: "number", message: "电话号码必须为数字" }
+        ],
+        address: [
+          { required: true, message: "请填写停车场地址", trigger: "blur" },
+          {
+            min: 1,
+            max: 300,
+            message: "停车场地址长度应在300以内",
+            trigger: "blur"
+          }
+        ],
+        bookTime: [
+          { required: true, message: "请填写预约时间", trigger: "blur" }
+        ]
+      }
     };
   },
   methods: {
-    placeOrder() {
-      this.checkAll();
-      if (
-        this.inputStatus.address &&
-        this.inputStatus.phone &&
-        this.inputStatus.plateNumber
-      ) {
-        this.showDialog();
-      }
+    addParkingBoy(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          console.log(this.appointmentDto);
+          this.showDialog();
+        }
+      });
     },
     showDialog() {
       Dialog.confirm({
@@ -77,36 +115,6 @@ export default {
           this.$message("取消操作");
         });
     },
-    checkAll() {
-      this.checkAddress();
-      this.checkPhone();
-      this.checkPlateNumber();
-    },
-    checkAddress() {
-      if (this.appointmentDto.address === "") {
-        this.errorMessage.address = "地址不能为空";
-      } else {
-        this.errorMessage.address = "";
-        this.inputStatus.address = true;
-      }
-    },
-    checkPlateNumber() {
-      if (this.appointmentDto.plateNumber === "") {
-        this.errorMessage.plateNumber = "车牌不能为空";
-      } else {
-        this.errorMessage.plateNumber = "";
-        this.inputStatus.plateNumber = true;
-      }
-    },
-    checkPhone() {
-      if (this.appointmentDto.phone === "") {
-        this.errorMessage.phone = "电话不能为空";
-        this.isCheck = false;
-      } else {
-        this.errorMessage.phone = "";
-        this.inputStatus.phone = true;
-      }
-    },
     confirmOrder() {
       this.$store.dispatch("createOrder", this.appointmentDto);
     },
@@ -116,16 +124,17 @@ export default {
     onClickRight() {
       this.$alert("结束");
     }
-  },
-  watch: {
-    appointmentDto: {
-      handler() {
-        this.checkAll();
-      },
-      deep: true
-    }
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+/*>>> el-form {*/
+/*  width: 244px;*/
+/*  margin: 0 auto;*/
+/*}*/
+>>> .element.style {
+  width: 244px;
+  margin: 0 auto;
+}
+</style>

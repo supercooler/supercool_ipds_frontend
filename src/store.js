@@ -39,6 +39,7 @@ export default new Vuex.Store({
     ],
     parkingBoyInfo: {},
     dialogFormVisible: false,
+    webSocket: "",
     parkingOrders: [
       {
         id: 1,
@@ -135,6 +136,9 @@ export default new Vuex.Store({
     },
     setSearchTag(state, data) {
       state.tag = data;
+    },
+    setWebSocket(state, data) {
+      state.webSocket = data;
     }
   },
   actions: {
@@ -206,6 +210,11 @@ export default new Vuex.Store({
     },
     createOrder: (context, appoinment) => {
       post("/parking-orders", appoinment).then(response => {
+        context.commit("setResponse", response);
+      });
+    },
+    getParkingOrderList: context => {
+      get("/parking-orders").then(response => {
         context.commit("setResponse", response);
       });
     }

@@ -5,7 +5,8 @@
       <van-panel title="停车订单">
         <div>
           <p>订单号：{{ getParkingOrder.id }}</p>
-          <!--          <p>停车员：</p>-->
+          <p>预约时间： {{ getParkingOrder.bookTime }}</p>
+          <p>停车员： {{ getParkingOrder.parkingBoy.name }}</p>
           <p>状态：{{ getParkingOrder.status }}</p>
         </div>
         <!--        <div slot="footer">-->
