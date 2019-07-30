@@ -119,6 +119,7 @@ export default new Vuex.Store({
     },
     setWebSocket(state, data) {
       state.webSocket = data;
+    },
     setParkingOrders(state, data) {
       state.parkingOrders = data;
     }
