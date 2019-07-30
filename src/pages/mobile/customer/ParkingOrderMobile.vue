@@ -23,10 +23,7 @@
           </el-form-item>
           <el-form-item>
             <el-button
-              v-if="
-                parkingOrder.status !== '已完成' &&
-                  parkingOrder.status === '已停车'
-              "
+              v-if="parkingOrder.status === '已停车'"
               type="primary"
               @click="fetchCar"
               ref="fetchCarButton"
@@ -34,7 +31,7 @@
               >取车</el-button
             >
             <el-button
-              v-if="parkingOrder.status !== '已完成'"
+              v-if="parkingOrder.status === '待确认'"
               type="primary"
               @click="finishOrder"
               ref="fetchCarButton"
@@ -77,6 +74,28 @@ export default {
       this.$store.state.statusBarCount = 5;
       this.parkingOrder.status = Constant.FINISH_FETCHING;
       this.$store.dispatch("updateOrderStatus", this.parkingOrder);
+    },
+    initStatus(status) {
+      switch (status) {
+        case "已下单":
+          this.$store.state.statusBarCount = 1;
+          break;
+        case "已配单":
+          this.$store.state.statusBarCount = 2;
+          break;
+        case "已停车":
+          this.$store.state.statusBarCount = 3;
+          break;
+        case "取车中":
+          this.$store.state.statusBarCount = 4;
+          break;
+        case "待确认":
+          this.$store.state.statusBarCount = 5;
+          break;
+        case "已完成":
+          this.$store.state.statusBarCount = 6;
+          break;
+      }
     }
   },
   computed: {
@@ -86,32 +105,12 @@ export default {
   },
   mounted() {
     this.parkingOrder = this.$store.state.parkingOrder;
+    this.initStatus(this.parkingOrder.status);
   },
   watch: {
-    "$store.state.parkingOrder"() {
-      this.parkingOrder = this.$store.state.parkingOrder;
-    }
-  },
-  created() {
-    switch (this.$route.params.status) {
-      case "已下单":
-        this.$store.state.statusBarCount = 1;
-        break;
-      case "已配单":
-        this.$store.state.statusBarCount = 2;
-        break;
-      case "已停车":
-        this.$store.state.statusBarCount = 3;
-        break;
-      case "取车中":
-        this.$store.state.statusBarCount = 4;
-        break;
-      case "待确认":
-        this.$store.state.statusBarCount = 5;
-        break;
-      case "已完成":
-        this.$store.state.statusBarCount = 6;
-        break;
+    "$store.state.parkingOrder"(newValue) {
+      this.parkingOrder = newValue;
+      this.initStatus(newValue.status);
     }
   }
 };

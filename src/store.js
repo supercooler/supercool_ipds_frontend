@@ -243,6 +243,7 @@ export default new Vuex.Store({
       put("/parking-orders", parkingOrder).then(response => {
         if (response.code === null) {
           context.commit("setParkingOrder", response.data);
+          Router.push("/customer-mobile/appointment-list");
         } else {
           alert(response.msg);
         }

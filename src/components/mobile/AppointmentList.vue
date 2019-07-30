@@ -18,6 +18,7 @@
   </div>
 </template>
 <script>
+import { clearInterval, setInterval } from "timers";
 import Constant from "@/common/constance.js";
 export default {
   name: "AppointmentList",
@@ -55,7 +56,13 @@ export default {
   },
   mounted() {
     let userId = JSON.parse(localStorage.getItem("user")).id;
-    this.$store.dispatch("getParkingByUserId", userId);
+    if (this.timer) {
+      clearInterval(this.timer);
+    } else {
+      this.timer = setInterval(() => {
+        this.$store.dispatch("getParkingByUserId", userId);
+      }, 100);
+    }
   },
   watch: {
     "$store.state.parkingOrders"() {
