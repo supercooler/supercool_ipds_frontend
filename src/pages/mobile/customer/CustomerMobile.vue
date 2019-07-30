@@ -5,6 +5,7 @@
       left-arrow
       class="nav-bar"
       @click-right="onClickRight"
+      @click-left="onClickLeft"
     >
       <van-icon name="setting-o" slot="right"></van-icon>
     </nav-bar>
@@ -48,7 +49,12 @@ export default {
       this.active = index;
     },
     onClickRight() {
-      this.$alert("个人信息");
+      this.$router.push("/customer-mobile/user-information-mobile");
+      this.active = 1;
+    },
+    onClickLeft() {
+      this.$router.go(-1);
+      this.active = 0;
     }
   }
 };

@@ -54,7 +54,8 @@ export default new Router({
       component: CustomerMobile,
       children: [
         { path: "", component: AppointmentInputBar },
-        { path: "appointment-list", component: AppointmentList }
+        { path: "appointment-list", component: AppointmentList },
+        { path: "user-information-mobile", component: UserInformationMobile }
       ]
     },
     {
