@@ -10,6 +10,7 @@ import ParkingOrderMobile from "./pages/mobile/customer/ParkingOrderMobile";
 import AppointmentInputBar from "./components/mobile/AppointmentInputBar";
 import AppointmentList from "./components/mobile/AppointmentList";
 import ParkingBoyMobile from "./pages/mobile/parkingBoy/ParkingBoyMobile";
+import UserInformationMobile from "./components/mobile/UserInformationMobile";
 
 Vue.use(Router);
 
@@ -53,7 +54,7 @@ export default new Router({
       component: CustomerMobile,
       children: [
         { path: "", component: AppointmentInputBar },
-        { path: "parking-order-mobile", component: ParkingOrderMobile }
+        { path: "appointment-list", component: AppointmentList }
       ]
     },
     {
@@ -65,6 +66,16 @@ export default new Router({
       path: "/parking-boy-mobile",
       name: "ParkingBoyMobile",
       component: ParkingBoyMobile
+    },
+    {
+      path: "/parking-order-mobile",
+      name: "ParkingOrderMobile",
+      component: ParkingOrderMobile
+    },
+    {
+      path: "/user-information-mobile",
+      name: "UserInformationMobile",
+      component: UserInformationMobile
     }
   ]
 });
