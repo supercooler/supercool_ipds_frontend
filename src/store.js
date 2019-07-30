@@ -192,7 +192,7 @@ export default new Vuex.Store({
         context.commit("setResponse", response);
       });
     },
-    getParkingOrderss: context => {
+    getParkingOrders: context => {
       get("/parking-orders").then(response => {
         context.commit("setParkingOrders", response);
       });
