@@ -56,7 +56,8 @@ export default new Router({
       children: [
         { path: "", component: AppointmentInputBar },
         { path: "appointment-list", component: AppointmentList },
-        { path: "user-information-mobile", component: UserInformationMobile }
+        { path: "user-information-mobile", component: UserInformationMobile },
+        { path: "parking-order-mobile", component: ParkingOrderMobile }
       ]
     },
     {

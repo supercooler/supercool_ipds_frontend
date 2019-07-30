@@ -19,33 +19,6 @@ export default new Vuex.Store({
     currentRow: {},
     parkingLots: [],
     response: {},
-    activities: [
-      {
-        content: Constant.HAD_ORDERED,
-        type: "primary",
-        color: "#DCDCDC"
-      },
-      {
-        content: Constant.HAD_DISPATCHED,
-        color: "#DCDCDC"
-      },
-      {
-        content: Constant.HAD_CAR_STOPED,
-        color: "#DCDCDC"
-      },
-      {
-        content: Constant.IN_FETCHING_CAR,
-        color: "#DCDCDC"
-      },
-      {
-        content: Constant.WILL_BE_CONFIRMED,
-        color: "#DCDCDC"
-      },
-      {
-        content: Constant.FINISH_FETCHING,
-        color: "#DCDCDC"
-      }
-    ],
     redundantTableData: [
       {
         id: "",
@@ -67,7 +40,9 @@ export default new Vuex.Store({
     ],
     parkingBoyInfo: {},
     dialogFormVisible: false,
-    parkingOrders: []
+    parkingOrders: [],
+    parkingOrder: {},
+    statusBarCount:0
   },
   mutations: {
     changeType(state) {
@@ -255,11 +230,8 @@ export default new Vuex.Store({
     },
     fetchCar: context => {
       put("/parking-orders", context.state.response.data).then(response => {
-        if (response.status == 200) {
-          context.state.response.data = response.body;
-          context.state.activities[3].color = "#0bbd87";
-          location.reload();
-        }
+        context.state.response.data = response.data;
+        location.reload();
       });
     },
     getParkingByUserId: (context, id) => {

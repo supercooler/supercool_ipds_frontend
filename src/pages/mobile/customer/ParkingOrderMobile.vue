@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width:338px;margin:0 auto">
     <span>
       <h2 align="center">订单详情</h2>
     </span>
@@ -16,20 +16,21 @@
             <el-tag>{{ parkingOrder.carLisenceNumber }}</el-tag>
           </el-form-item>
           <el-form-item label="停车场:">
-            <el-tag>{{ parkingOrder.parkingLot }}</el-tag>
+            <el-tag>{{ parkingOrder.parkingLot.name }}</el-tag>
           </el-form-item>
           <el-form-item label="停车员:">
-            <el-tag>{{ parkingOrder.parkingBoyName }}</el-tag>
+            <el-tag>{{ parkingOrder.parkingBoy.name }}</el-tag>
           </el-form-item>
           <el-form-item label="手机号码:">
-            <el-tag>{{ parkingOrder.parkingBoyPhone }}</el-tag>
+            <el-tag>{{ parkingOrder.parkingBoy.phone }}</el-tag>
           </el-form-item>
           <el-form-item>
             <el-button
+              v-if="parkingOrder.status !== '已完成'"
               type="primary"
               @click="fetchCar"
               ref="fetchCarButton"
-              :disabled="isfetchCarDisable"
+              :disabled="isFetchCarDisable"
               >取车</el-button
             >
           </el-form-item>
@@ -41,17 +42,17 @@
 
 <script>
 import StatusBar from "@/components/mobile/StatusBar.vue";
+
 export default {
   name: "ParkingOrderMobile",
   data() {
     return {
       parkingOrder: {
-        carLisenceNumber: "1234567",
-        parkingLot: "黄某停车场",
-        parkingBoyName: "黄章冠",
-        parkingBoyPhone: "13800138000"
+        carLisenceNumber: "",
+        parkingLot: {},
+        parkingBoy: {},
       },
-      isfetchCarDisable: false
+      isFetchCarDisable: false
     };
   },
   computed: {
@@ -64,9 +65,15 @@ export default {
   },
   methods: {
     fetchCar() {
-      this.isfetchCarDisable = true;
+      this.isFetchCarDisable = true;
+      this.$store.state.statusBarCount=4;
       this.$store.dispatch("fetchCar");
     }
+  },
+  mounted() {
+    this.parkingOrder = this.$store.state.parkingOrder;
+    this.$store.state.parkingOrders.forEach(item => {
+    })
   }
 };
 </script>
