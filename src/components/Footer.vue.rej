@@ -1,0 +1,8 @@
+diff a/src/components/Footer.vue b/src/components/Footer.vue	(rejected hunks)
+@@ -12,3 +12,3 @@ export default {
+-    .footer {
+-        background-color: midnightblue;
+-    }
++.footer {
++  background-color: midnightblue;
++}

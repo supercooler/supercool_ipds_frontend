@@ -15,6 +15,7 @@
 </template>
 
 <script>
+<<<<<<< Updated upstream
 import Constant from "@/common/constance.js";
 export default {
   name: "StatusBar",
@@ -54,6 +55,15 @@ export default {
       console.log(this.$store.state.statusBarCount);
       this.status[i].color = "#0bbd87";
     }
+=======
+export default {
+  name: "StatusBar",
+  props:{'activities':Array},
+  data() {
+    return {
+      status: this.activities
+    };
+>>>>>>> Stashed changes
   }
 };
 </script>
