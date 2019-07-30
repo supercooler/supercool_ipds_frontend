@@ -6,11 +6,7 @@
     <div>
       <status-bar class="statusBar"></status-bar>
       <div class="fetchCar">
-        <el-form
-          status-icon
-          ref="ruleForm"
-          label-width="100px"
-        >
+        <el-form status-icon ref="ruleForm" label-width="100px">
           <el-form-item label="车牌号:">
             <el-tag>{{ parkingOrder.carLisenceNumber }}</el-tag>
           </el-form-item>
@@ -96,7 +92,28 @@ export default {
       this.parkingOrder = this.$store.state.parkingOrder;
     }
   },
-  created() {}
+  created() {
+    switch (this.$route.params.status) {
+      case "已下单":
+        this.$store.state.statusBarCount = 1;
+        break;
+      case "已配单":
+        this.$store.state.statusBarCount = 2;
+        break;
+      case "已停车":
+        this.$store.state.statusBarCount = 3;
+        break;
+      case "取车中":
+        this.$store.state.statusBarCount = 4;
+        break;
+      case "待确认":
+        this.$store.state.statusBarCount = 5;
+        break;
+      case "已完成":
+        this.$store.state.statusBarCount = 6;
+        break;
+    }
+  }
 };
 </script>
 

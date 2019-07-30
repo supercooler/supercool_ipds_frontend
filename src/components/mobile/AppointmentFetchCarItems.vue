@@ -5,12 +5,17 @@
     </span>
     <el-table :data="fetchCarOrders" stripe>
       <el-table-column prop="id" label="订单号"></el-table-column>
-      <el-table-column prop="parkingLot.name" label="所停停车场"></el-table-column>
+      <el-table-column
+        prop="parkingLot.name"
+        label="所停停车场"
+      ></el-table-column>
       <el-table-column prop="status" label="状态">
         <template slot-scope="scope">
           <el-tag @click="getFetchCarOrderItemDetail(scope.row)">
-            <el-badge :value="1" v-if="scope.row.status === '已停车'">{{scope.row.status}}</el-badge>
-            <template v-else>{{scope.row.status}}</template>
+            <el-badge :value="1" v-if="scope.row.status === '已停车'">{{
+              scope.row.status
+            }}</el-badge>
+            <template v-else>{{ scope.row.status }}</template>
           </el-tag>
         </template>
       </el-table-column>
@@ -37,7 +42,9 @@ export default {
   methods: {
     getFetchCarOrderItemDetail: function(row) {
       this.$router.push({
-        path: `/parking-boy-mobile/appointment-fetch-car-detail/${row.id}/${row.status}`
+        path: `/parking-boy-mobile/appointment-fetch-car-detail/${row.id}/${
+          row.status
+        }`
       });
     },
     getParkingOrdersByTimer() {

@@ -1,20 +1,38 @@
 <template>
   <div style="text-align: center">
-    <nav-bar title="智能派单停车系统" left-arrow class="nav-bar" @click-left="onClickLeft"></nav-bar>
+    <nav-bar
+      title="智能派单停车系统"
+      left-arrow
+      class="nav-bar"
+      @click-left="onClickLeft"
+    ></nav-bar>
     <router-view></router-view>
     <van-tabbar v-model="active">
-      <van-tabbar-item icon="home-o" @click="clickHomePage">首页</van-tabbar-item>
-      <van-tabbar-item icon="friends-o" :info="infoMessage" @click="clickStopOrderItem">停车订单</van-tabbar-item>
+      <van-tabbar-item icon="home-o" @click="clickHomePage"
+        >首页</van-tabbar-item
+      >
+      <van-tabbar-item
+        icon="friends-o"
+        :info="infoMessage"
+        @click="clickStopOrderItem"
+        >停车订单</van-tabbar-item
+      >
       <template v-if="willDeal !== 0">
         <van-tabbar-item
           icon="friends-o"
           :info="willDeal"
           id="fetchOrder"
           @click="clickFetchOrderItem"
-        >取车订单</van-tabbar-item>
+          >取车订单</van-tabbar-item
+        >
       </template>
       <template v-else>
-        <van-tabbar-item icon="friends-o" id="fetchOrder" @click="clickFetchOrderItem">取车订单</van-tabbar-item>
+        <van-tabbar-item
+          icon="friends-o"
+          id="fetchOrder"
+          @click="clickFetchOrderItem"
+          >取车订单</van-tabbar-item
+        >
       </template>
     </van-tabbar>
   </div>

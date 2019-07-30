@@ -4,13 +4,13 @@
     <div class="orderInfo">
       <el-form label-width="100px">
         <el-form-item label="用户名">
-          <el-tag>{{orderDetail.user.userName}}</el-tag>
+          <el-tag>{{ orderDetail.user.userName }}</el-tag>
         </el-form-item>
         <el-form-item label="车牌号">
-          <el-tag>{{orderDetail.carLisenceNumber}}</el-tag>
+          <el-tag>{{ orderDetail.carLisenceNumber }}</el-tag>
         </el-form-item>
         <el-form-item label="停车场">
-          <el-tag>{{orderDetail.parkingLot.name}}</el-tag>
+          <el-tag>{{ orderDetail.parkingLot.name }}</el-tag>
         </el-form-item>
       </el-form>
     </div>
@@ -84,13 +84,13 @@ export default {
       });
     },
     GivenCar: function() {
-        this.orderDetail.status = "待确认";
+      this.orderDetail.status = "待确认";
       this.$put("/parking-orders", this.orderDetail).then(() => {
         this.$router.go(-1);
       });
     },
     seeScore: function() {
-        this.$message.success("本次订单的评分是：" + this.orderDetail.score);
+      this.$message.success("本次订单的评分是：" + this.orderDetail.score);
     }
   }
 };
@@ -124,4 +124,3 @@ export default {
   pointer-events: none;
 }
 </style>
-

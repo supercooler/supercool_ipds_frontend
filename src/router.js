@@ -12,9 +12,9 @@ import AppointmentList from "./components/mobile/AppointmentList";
 import ParkingBoyMobile from "./pages/mobile/parkingBoy/ParkingBoyMobile";
 import UserInformationMobile from "./components/mobile/UserInformationMobile";
 import CustomerLoginMobile from "./pages/mobile/customer/CustomerLoginMobile";
-import AppointmentShowDetail from "./components/mobile/AppointmentShowDetail.vue"
+import AppointmentShowDetail from "./components/mobile/AppointmentShowDetail.vue";
 import RegisterUser from "./pages/mobile/customer/RegisterUser";
-import AppointmentFetchCarItems from "./components/mobile/AppointmentFetchCarItems.vue"
+import AppointmentFetchCarItems from "./components/mobile/AppointmentFetchCarItems.vue";
 
 Vue.use(Router);
 
@@ -73,8 +73,14 @@ export default new Router({
       name: "ParkingBoyMobile",
       component: ParkingBoyMobile,
       children: [
-        {path: "appointment-fetch-car-items-list", component: AppointmentFetchCarItems},
-        {path: "appointment-fetch-car-detail/:id/:status", component: AppointmentShowDetail}
+        {
+          path: "appointment-fetch-car-items-list",
+          component: AppointmentFetchCarItems
+        },
+        {
+          path: "appointment-fetch-car-detail/:id/:status",
+          component: AppointmentShowDetail
+        }
       ]
     },
     {
