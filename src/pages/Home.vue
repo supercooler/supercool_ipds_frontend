@@ -28,7 +28,7 @@ export default {
     };
   },
   mounted() {
-    this.userName = localStorage.getItem("userName");
+    this.userName = JSON.parse(localStorage.getItem("user")).userName;
   }
 };
 </script>

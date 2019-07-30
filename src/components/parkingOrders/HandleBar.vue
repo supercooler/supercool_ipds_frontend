@@ -5,11 +5,7 @@
         >批量删除</el-button
       >
     </div>
-    <div
-      align="right"
-      @keydown.enter="submitForm('ruleForm')"
-      style="float:right;"
-    >
+    <div align="right" @keydown.enter="submitForm('user')" style="float:right;">
       <el-row>
         <div width="180" style="display:inline-block">
           <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
@@ -24,7 +20,7 @@
         <el-button
           type="primary"
           icon="el-icon-search"
-          @click="submitForm('ruleForm')"
+          @click="submitForm('user')"
           >查询</el-button
         >
       </el-row>
@@ -36,7 +32,7 @@
 export default {
   data() {
     return {
-      ruleForm: {
+      user: {
         id: ""
       },
       rules: {

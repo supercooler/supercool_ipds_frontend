@@ -4,8 +4,9 @@
       <div class="block">
         <el-avatar :size="50" :src="circleUrl"></el-avatar>
       </div>
-      <div class="text item"><span>姓名：</span></div>
-      <div class="text item"><span>联系方式：</span></div>
+      <div class="text item">
+        <span>姓名：{{ user.userName }}</span>
+      </div>
     </el-card>
   </div>
 </template>
@@ -15,8 +16,12 @@ export default {
   name: "UserInformationMobile",
   data() {
     return {
-      circleUrl: "../../assets/head.jpg"
+      user: {},
+      circleUrl: "../assets/head.jpg"
     };
+  },
+  mounted() {
+    this.user = JSON.parse(localStorage.getItem("user"));
   }
 };
 </script>

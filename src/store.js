@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import { get, post, put, myDelete } from "./config/axios";
 import Router from "./router.js";
+import Constant from "@/common/constance.js";
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -105,8 +106,18 @@ export default new Vuex.Store({
     loginUser(state, res) {
       if (res.msg == null) {
         let user = res.data;
-        localStorage.setItem("userName", JSON.stringify(user.userName));
-        Router.push("/home");
+        localStorage.setItem("user", JSON.stringify(user));
+        switch (user.role) {
+          case Constant.ROLE_USER_CUSTOMER:
+            Router.push("/customer-mobile");
+            break;
+          case Constant.ROLE_USER_PARKING_BOY:
+            Router.push("/parking-boy-mobile");
+            break;
+          case Constant.ROLE_USER_SUPER_MANAGER:
+            Router.push("/home");
+            break;
+        }
       } else {
         alert(res.msg);
       }
@@ -181,7 +192,7 @@ export default new Vuex.Store({
       });
     },
     loginUser: (context, user) => {
-      post("/users", user).then(res => {
+      post("/users/login", user).then(res => {
         context.commit("loginUser", res);
       });
     },
