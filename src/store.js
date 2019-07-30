@@ -213,12 +213,17 @@ export default new Vuex.Store({
     },
     getParkingOrders: context => {
       get("/parking-orders").then(response => {
-        context.commit("setParkingOrders", response);
+        context.commit("setParkingOrders", response.data);
       });
     },
     deleteParkingOrder: (context, id) => {
       myDelete("/parking-orders?id=" + id).then(() => {
         location.reload();
+      });
+    },
+    searchParkingOrders: (context, info) => {
+      get("/parking-orders" + info).then(response => {
+        context.commit("setParkingOrders", response.data);
       });
     }
   }
