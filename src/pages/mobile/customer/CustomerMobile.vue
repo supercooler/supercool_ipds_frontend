@@ -81,7 +81,7 @@ export default {
   mounted() {
     // WebSocket
     if ("WebSocket" in window) {
-      this.websocket = new WebSocket("ws://localhost:8089/websocket");
+      this.websocket = new WebSocket("ws://39.100.40.15:8080/websocket");
       this.initWebSocket();
     } else {
       alert("当前浏览器 Not support websocket");
