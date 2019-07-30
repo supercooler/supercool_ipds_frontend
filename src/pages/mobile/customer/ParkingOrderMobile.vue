@@ -16,7 +16,9 @@
             <el-tag>{{ parkingOrder.carLisenceNumber }}</el-tag>
           </el-form-item>
           <el-form-item label="停车场:">
-            <el-tag>{{ parkingOrder.parkingLot.name }}</el-tag>
+            <el-tag v-if="parkingOrder.parkingLot !== null">{{
+              parkingOrder.parkingLot.name
+            }}</el-tag>
           </el-form-item>
           <el-form-item label="停车员:">
             <el-tag>{{ parkingOrder.parkingBoy.name }}</el-tag>
@@ -26,12 +28,22 @@
           </el-form-item>
           <el-form-item>
             <el-button
-              v-if="parkingOrder.status !== '已完成'"
+              v-if="
+                parkingOrder.status !== '已完成' &&
+                  parkingOrder.status === '已停车'
+              "
               type="primary"
               @click="fetchCar"
               ref="fetchCarButton"
               :disabled="isFetchCarDisable"
               >取车</el-button
+            >
+            <el-button
+              v-if="parkingOrder.status !== '已完成'"
+              type="primary"
+              @click="finishOrder"
+              ref="fetchCarButton"
+              >确认订单</el-button
             >
           </el-form-item>
         </el-form>
@@ -42,6 +54,7 @@
 
 <script>
 import StatusBar from "@/components/mobile/StatusBar.vue";
+import Constant from "@/common/constance.js";
 
 export default {
   name: "ParkingOrderMobile",
@@ -55,11 +68,6 @@ export default {
       isFetchCarDisable: false
     };
   },
-  computed: {
-    getParkingOrder() {
-      return this.$store.state.response.data;
-    }
-  },
   components: {
     StatusBar
   },
@@ -67,13 +75,29 @@ export default {
     fetchCar() {
       this.isFetchCarDisable = true;
       this.$store.state.statusBarCount = 4;
-      this.$store.dispatch("fetchCar");
+      this.parkingOrder.status = Constant.IN_FETCHING_CAR;
+      this.$store.dispatch("updateOrderStatus", this.parkingOrder);
+    },
+    finishOrder() {
+      this.$store.state.statusBarCount = 5;
+      this.parkingOrder.status = Constant.FINISH_FETCHING;
+      this.$store.dispatch("updateOrderStatus", this.parkingOrder);
+    }
+  },
+  computed: {
+    getParkingOrder() {
+      return this.$store.state.response.data;
     }
   },
   mounted() {
     this.parkingOrder = this.$store.state.parkingOrder;
-    this.$store.state.parkingOrders.forEach(() => {});
-  }
+  },
+  watch: {
+    "$store.state.parkingOrder"() {
+      this.parkingOrder = this.$store.state.parkingOrder;
+    }
+  },
+  created() {}
 };
 </script>
 
