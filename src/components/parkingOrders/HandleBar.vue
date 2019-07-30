@@ -1,23 +1,34 @@
 <template>
-  <div align="right" @keydown.enter="submitForm('ruleForm')">
-    <el-row>
-      <div width="180" style="display:inline-block">
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
-          <el-form-item prop="id">
-            <el-input
-              v-model="ruleForm.id"
-              placeholder="请输入订单编号"
-            ></el-input>
-          </el-form-item>
-        </el-form>
-      </div>
-      <el-button
-        type="primary"
-        icon="el-icon-search"
-        @click="submitForm('ruleForm')"
-        >查询</el-button
+  <div>
+    <div align="left" style="float:left;">
+      <el-button type="danger" icon="el-icon-minus" @click="delOrders"
+        >批量删除</el-button
       >
-    </el-row>
+    </div>
+    <div
+      align="right"
+      @keydown.enter="submitForm('ruleForm')"
+      style="float:right;"
+    >
+      <el-row>
+        <div width="180" style="display:inline-block">
+          <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
+            <el-form-item prop="id">
+              <el-input
+                v-model="ruleForm.id"
+                placeholder="请输入订单编号"
+              ></el-input>
+            </el-form-item>
+          </el-form>
+        </div>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="submitForm('ruleForm')"
+          >查询</el-button
+        >
+      </el-row>
+    </div>
   </div>
 </template>
 
@@ -43,7 +54,13 @@ export default {
           return false;
         }
       });
+    },
+    delOrders() {
+      this.$message.success("删除成功");
     }
+  },
+  mounted() {
+    this.$store.dispatch("getParkingOrders");
   }
 };
 </script>

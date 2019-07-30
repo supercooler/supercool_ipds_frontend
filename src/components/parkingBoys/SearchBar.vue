@@ -87,7 +87,7 @@ export default {
         name: this.$store.state.name
       },
       inputTag: {
-        tag: this.$store.state.name
+        tag: this.$store.state.tag
       },
       rules: {
         name: [{ validator: validateInputName, trigger: "blur" }]

@@ -81,3 +81,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+>>> .el-form-item__label {
+  font-size: 20px;
+  color: white;
+}
+</style>

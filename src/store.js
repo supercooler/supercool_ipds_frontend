@@ -39,27 +39,7 @@ export default new Vuex.Store({
     ],
     parkingBoyInfo: {},
     dialogFormVisible: false,
-    webSocket: "",
-    parkingOrders: [
-      {
-        id: 1,
-        state: "已下单",
-        carLisenceNumber: "9401258",
-        parking_boy_id: 1,
-        userPhone: "18229797216",
-        preLocation: "南方软件园",
-        score: 2.5
-      },
-      {
-        id: 2,
-        state: "已下单",
-        carLisenceNumber: "9491258",
-        parking_boy_id: 2,
-        userPhone: "18232797216",
-        preLocation: "西方软件园",
-        score: 3.5
-      }
-    ]
+    parkingOrders: []
   },
   mutations: {
     changeType(state) {
@@ -139,6 +119,8 @@ export default new Vuex.Store({
     },
     setWebSocket(state, data) {
       state.webSocket = data;
+    setParkingOrders(state, data) {
+      state.parkingOrders = data;
     }
   },
   actions: {
@@ -203,7 +185,6 @@ export default new Vuex.Store({
       });
     },
     deleteParkingBoy: (context, id) => {
-      console.log(id);
       myDelete("/parking-boys?id=" + id).then(() => {
         location.reload();
       });
@@ -216,6 +197,16 @@ export default new Vuex.Store({
     getParkingOrderList: context => {
       get("/parking-orders").then(response => {
         context.commit("setResponse", response);
+      });
+    },
+    getParkingOrders: context => {
+      get("/parking-orders").then(response => {
+        context.commit("setParkingOrders", response);
+      });
+    },
+    deleteParkingOrder: (context, id) => {
+      myDelete("/parking-orders?id=" + id).then(() => {
+        location.reload();
       });
     }
   }
