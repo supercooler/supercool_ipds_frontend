@@ -17,20 +17,21 @@
             <el-input
               v-model="appointmentDto.plateNumber"
               autocomplete="off"
-              maxlength="15"
+              maxlength="7"
             ></el-input>
           </el-form-item>
           <el-form-item label="电话：" prop="phone">
             <el-input
               v-model.number="appointmentDto.phone"
               autocomplete="off"
+              maxlength="11"
             ></el-input>
           </el-form-item>
           <el-form-item label="地址：" prop="address">
             <el-input
               v-model="appointmentDto.address"
               autocomplete="off"
-              maxlength="299"
+              maxlength="100"
             ></el-input>
           </el-form-item>
           <el-form-item label="预约时间：" prop="bookTime">
@@ -80,8 +81,8 @@ export default {
           { required: true, message: "请填写停车场地址", trigger: "blur" },
           {
             min: 1,
-            max: 300,
-            message: "停车场地址长度应在300以内",
+            max: 100,
+            message: "停车场地址长度应在100以内",
             trigger: "blur"
           }
         ],
@@ -95,7 +96,6 @@ export default {
     addParkingBoy(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          console.log(this.appointmentDto);
           this.showDialog();
         }
       });

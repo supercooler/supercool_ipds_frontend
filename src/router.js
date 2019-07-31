@@ -15,8 +15,8 @@ import CustomerLoginMobile from "./pages/mobile/customer/CustomerLoginMobile";
 import AppointmentShowDetail from "./components/mobile/AppointmentShowDetail.vue";
 import RegisterUser from "./pages/mobile/customer/RegisterUser";
 import AppointmentFetchCarItems from "./components/mobile/AppointmentFetchCarItems.vue";
-import AppointmentShowParkItemsDetail from "./components/mobile/AppointmentShowParkItemsDetail.vue"
-import AppointmentParkCarItems from "./components/mobile/AppointmentParkCarItems.vue"
+import AppointmentShowParkItemsDetail from "./components/mobile/AppointmentShowParkItemsDetail.vue";
+import AppointmentParkCarItems from "./components/mobile/AppointmentParkCarItems.vue";
 
 Vue.use(Router);
 
@@ -27,10 +27,11 @@ export default new Router({
     {
       path: "/parking-boy",
       name: "parking-boy",
-      component: ParkingBoy
+      component: ParkingBoy,
+      meta: {
+        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
+      }
     },
-
-    //addLogin
     {
       path: "/login",
       name: "login",
@@ -39,16 +40,25 @@ export default new Router({
     {
       path: "/parking-lot",
       name: "parkingLot",
-      component: ParkingLot
+      component: ParkingLot,
+      meta: {
+        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
+      }
     },
     {
       path: "/parking-order",
       name: "ParkingOrder",
-      component: ParkingOrder
+      component: ParkingOrder,
+      meta: {
+        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
+      }
     },
     {
       path: "/home",
       component: Home,
+      meta: {
+        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
+      },
       children: [
         { path: "parking-lot", component: ParkingLot },
         { path: "parking-order", component: ParkingOrder },
@@ -63,33 +73,60 @@ export default new Router({
         { path: "appointment-list", component: AppointmentList },
         { path: "user-information-mobile", component: UserInformationMobile },
         { path: "parking-order-mobile", component: ParkingOrderMobile }
-      ]
+      ],
+      meta: {
+        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
+      }
     },
     {
       path: "/appointment-list",
       name: "AppointmentList",
-      component: AppointmentList
+      component: AppointmentList,
+      meta: {
+        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
+      }
     },
     {
       path: "/parking-boy-mobile",
       name: "ParkingBoyMobile",
       component: ParkingBoyMobile,
       children: [
-        {path: "appointment-park-car-items-list", component: AppointmentParkCarItems},
-        {path: "appointment-park-car-detail/:id/:status", component: AppointmentShowParkItemsDetail},
-        {path: "appointment-fetch-car-items-list", component: AppointmentFetchCarItems},
-        {path: "appointment-fetch-car-detail/:id/:status", component: AppointmentShowDetail}
-      ]
+        {
+          path: "appointment-park-car-items-list",
+          component: AppointmentParkCarItems
+        },
+        {
+          path: "appointment-park-car-detail/:id/:status",
+          component: AppointmentShowParkItemsDetail
+        },
+        {
+          path: "appointment-fetch-car-items-list",
+          component: AppointmentFetchCarItems
+        },
+        {
+          path: "appointment-fetch-car-detail/:id/:status",
+          component: AppointmentShowDetail
+        }
+      ],
+      meta: {
+        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
+      }
     },
     {
       path: "/parking-order-mobile",
       name: "ParkingOrderMobile",
-      component: ParkingOrderMobile
+      component: ParkingOrderMobile,
+      meta: {
+        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
+      }
     },
     {
       path: "/user-information-mobile",
       name: "UserInformationMobile",
-      component: UserInformationMobile
+      component: UserInformationMobile,
+      meta: {
+        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
+      }
     },
     {
       path: "/customer-login-mobile",

@@ -119,6 +119,9 @@ export default new Vuex.Store({
           case Constant.ROLE_USER_SUPER_MANAGER:
             Router.push("/home");
             break;
+          case Constant.ROLE_USER_MANAGER:
+            Router.push("/home");
+            break;
         }
       } else {
         alert(res.msg);
@@ -258,7 +261,7 @@ export default new Vuex.Store({
       post("/users/register", user).then(response => {
         context.commit("setUser", response.data);
         if (response.code === null) {
-          Router.push("/customer-mobile");
+          Router.push("/customer-login-mobile");
         } else {
           alert(response.msg);
         }

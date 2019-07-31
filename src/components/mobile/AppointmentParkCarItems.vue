@@ -9,7 +9,7 @@
       <el-table-column prop="status" label="状态">
         <template slot-scope="scope">
           <el-tag @click="getParkCarOrderItemDetail(scope.row)">
-            <el-badge :value="1">{{scope.row.status}}</el-badge>
+            <el-badge :value="1">{{ scope.row.status }}</el-badge>
           </el-tag>
         </template>
       </el-table-column>
@@ -17,24 +17,20 @@
   </div>
 </template>
 <script>
-import { clearInterval, setInterval } from "timers";
+// import { clearInterval, setInterval } from "timers";
 export default {
   name: "AppointmentList",
   data() {
     return {
-      parkCarOrders: [
-        {
-          id: "1",
-          bookTime: "2019-10-10",
-          status: "已下单"
-        }
-      ]
+      parkCarOrders: []
     };
   },
   methods: {
     getParkCarOrderItemDetail: function(row) {
       this.$router.push({
-        path: `/parking-boy-mobile/appointment-park-car-detail/${row.id}/${row.status}`
+        path: `/parking-boy-mobile/appointment-park-car-detail/${row.id}/${
+          row.status
+        }`
       });
     },
     getParkingOrdersByTimer() {

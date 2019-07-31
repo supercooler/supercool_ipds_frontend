@@ -8,6 +8,11 @@
         <span>姓名：{{ user.userName }}</span>
       </div>
     </el-card>
+    <el-card class="box-card">
+      <div class="text item">
+        <el-button type="danger" plain @click="logout">登出系统</el-button>
+      </div>
+    </el-card>
   </div>
 </template>
 
@@ -22,6 +27,12 @@ export default {
   },
   mounted() {
     this.user = JSON.parse(localStorage.getItem("user"));
+  },
+  methods: {
+    logout() {
+      localStorage.setItem("user", JSON.stringify(""));
+      this.$router.push("/customer-login-mobile");
+    }
   }
 };
 </script>

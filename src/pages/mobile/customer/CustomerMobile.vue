@@ -1,5 +1,5 @@
 <template>
-  <div class="" style="text-align: center">
+  <div class style="text-align: center">
     <nav-bar
       title="智能派单停车系统"
       left-arrow

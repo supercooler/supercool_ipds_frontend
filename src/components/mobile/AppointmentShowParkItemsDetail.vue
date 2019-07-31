@@ -4,14 +4,14 @@
     <div class="orderInfo">
       <el-form label-width="100px">
         <el-form-item label="用户名">
-          <el-tag>{{orderDetail.user.userName}}</el-tag>
+          <el-tag>{{ orderDetail.user.userName }}</el-tag>
         </el-form-item>
         <el-form-item label="车牌号">
-          <el-tag>{{orderDetail.carLisenceNumber}}</el-tag>
+          <el-tag>{{ orderDetail.carLisenceNumber }}</el-tag>
         </el-form-item>
         <el-form-item label="停车场">
           <!-- <el-tag>{{orderDetail.parkingLot.name}}</el-tag> -->
-          <el-select v-model="value" placeholder="华为停车场" size="small">
+          <el-select v-model="value" placeholder="请选择停车场" size="small">
             <el-option
               v-for="item in parkingLots"
               :key="item.id"
@@ -21,14 +21,14 @@
           </el-select>
         </el-form-item>
         <el-form-item label="预约时间">
-          <el-tag>{{orderDetail.bookTime}}</el-tag>
+          <el-tag>{{ orderDetail.bookTime }}</el-tag>
         </el-form-item>
         <el-form-item label="预约地点">
-          <el-tag>{{orderDetail.preLocation}}</el-tag>
+          <el-tag>{{ orderDetail.preLocation }}</el-tag>
         </el-form-item>
       </el-form>
     </div>
-      <div class="parkCarButton" @click="parkCar">停车</div>
+    <div class="parkCarButton" @click="parkCar">停车</div>
   </div>
 </template>
 <script>
@@ -36,20 +36,9 @@ import StatusBar from "./StatusBar.vue";
 export default {
   data() {
     return {
-      orderDetail: {
-        status: "已配单",
-        user: {
-          userName: "洪老板"
-        },
-        bookTime: "2019-10-19 10:10:00",
-        preLocation: "sdhgfukasgdf",
-        carLisenceNumber: "粤A23456",
-        parkingLot: {
-          name: "华为停车场"
-        }
-      },
+      orderDetail: { user: {} },
       parkingLots: [],
-      value: ''
+      value: ""
     };
   },
   components: {
@@ -82,21 +71,22 @@ export default {
     this.$get(`/parking-orders/${id}`).then(res => {
       this.orderDetail = res.data;
     });
-    this.$get(`/parking-lots/boy?parkingBoyName=${JSON.parse(localStorage.getItem("user")).userName}`).then(res => {
+    this.$get(
+      `/parking-lots/boy?parkingBoyName=${
+        JSON.parse(localStorage.getItem("user")).userName
+      }`
+    ).then(res => {
       this.parkingLots = res.data;
-    })
+    });
   },
   methods: {
     parkCar: function() {
       this.orderDetail.status = "已停车";
-      this.orderDetail.parkingLot = {
-        id: 1,
-        address: 'addadafdfadf',
-        name: '华为停车场',
-        capacity: 10,
-        restCapacity: 6
-      };
+      let username = this.orderDetail.user.userName;
+      this.orderDetail.parkingLot = this.value;
+      this.orderDetail.parkingLot.restCapacity -= 1;
       this.$put("/parking-orders", this.orderDetail).then(() => {
+        this.$get("/sendOneWebSocket/" + username);
         this.$router.go(-1);
       });
     }
@@ -132,4 +122,3 @@ export default {
   pointer-events: none;
 }
 </style>
-
