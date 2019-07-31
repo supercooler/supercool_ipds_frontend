@@ -90,7 +90,9 @@ export default {
     },
     // eslint-disable-next-line no-unused-vars
     addParkingBoy(formName) {
-      this.$store.dispatch("registerUser", this.user);
+      if(this.user.password == this.user.checkPass){
+        this.$store.dispatch("registerUser", this.user);
+      }
     },
     onClickLeft() {
       this.$router.go(-1);

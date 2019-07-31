@@ -261,7 +261,7 @@ export default new Vuex.Store({
       post("/users/register", user).then(response => {
         context.commit("setUser", response.data);
         if (response.code === null) {
-          Router.push("/customer-mobile");
+          Router.push("/customer-login-mobile");
         } else {
           alert(response.msg);
         }
