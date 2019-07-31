@@ -1,8 +1,20 @@
 <template>
   <el-container>
-    <el-header
-      ><span><strong>智能派单停车系统</strong></span>
-      <span style="margin-left: 1400px">Hello, {{ userName }}</span>
+    <el-header>
+      <span>
+        <strong>智能派单停车系统</strong>
+      </span>
+      <span style="margin-left: 1400px" v-if="userName != undefined"
+        >Hello, {{ userName }}</span
+      >
+      <el-button
+        type="info"
+        plain
+        style="float:right;margin-top:10px"
+        @click="logout"
+        v-if="userName != undefined"
+        >点此登出</el-button
+      >
     </el-header>
     <el-container>
       <el-aside>
@@ -29,6 +41,12 @@ export default {
   },
   mounted() {
     this.userName = JSON.parse(localStorage.getItem("user")).userName;
+  },
+  methods: {
+    logout() {
+      localStorage.setItem("user", JSON.stringify(""));
+      this.$router.push("/login");
+    }
   }
 };
 </script>
