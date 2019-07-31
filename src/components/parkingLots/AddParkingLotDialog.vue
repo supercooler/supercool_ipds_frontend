@@ -17,14 +17,14 @@
           <el-input
             v-model.number="parkingLot.capacity"
             autocomplete="off"
-            maxlength="3"
+            maxlength="2"
           ></el-input>
         </el-form-item>
         <el-form-item label="地址：" prop="address">
           <el-input
             v-model="parkingLot.address"
             autocomplete="off"
-            maxlength="299"
+            maxlength="50"
           ></el-input>
         </el-form-item>
         <el-form-item>
@@ -62,8 +62,8 @@ export default {
           { required: true, message: "请填写停车场地址", trigger: "blur" },
           {
             min: 1,
-            max: 300,
-            message: "停车场地址长度应在300以内",
+            max: 50,
+            message: "停车场地址长度应在50以内",
             trigger: "blur"
           }
         ]
@@ -83,6 +83,7 @@ export default {
         .dispatch("createParkingLot", {
           name: this.parkingLot.name,
           capacity: this.parkingLot.capacity,
+          restCapacity: this.parkingLot.capacity,
           address: this.parkingLot.address
         })
         .then(() => {
