@@ -6,6 +6,22 @@
       border
       :default-sort="{ prop: 'age', order: 'ascending' }"
     >
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <div
+            style="float: left; margin-right:20px; margin-left: 20px;margin-top: 10px"
+            v-for="(parkingLot, index) in props.row.parkingLots"
+            :key="index"
+          >
+            <span>{{ parkingLot.name }}</span>
+          </div>
+          <div>
+            <el-button type="primary" @click="openEditDialog(props.row)"
+              >管理停车场</el-button
+            >
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column align="center" prop="id" label="id"></el-table-column>
       <el-table-column
         align="center"
@@ -70,10 +86,15 @@
         </template>
       </el-table-column>
     </el-table>
+    <EditParkingLotDialog ref="editParkingLotDialog"></EditParkingLotDialog>
   </div>
 </template>
 <script>
+import EditParkingLotDialog from "@/components/parkingBoys/EditParkingLotDialog.vue";
 export default {
+  components: {
+    EditParkingLotDialog
+  },
   mounted() {
     this.$store.dispatch("getParkingBoysFromBackend");
   },
@@ -92,7 +113,12 @@ export default {
           });
         })
         .catch(() => {});
+    },
+    openEditDialog(parkingBoy) {
+      this.$refs.editParkingLotDialog.initParkingLots(parkingBoy);
+      this.$refs.editParkingLotDialog.showDialog();
     }
   }
 };
 </script>
+<style scoped></style>
