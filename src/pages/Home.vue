@@ -40,7 +40,12 @@ export default {
     };
   },
   mounted() {
-    this.userName = JSON.parse(localStorage.getItem("user")).userName;
+    if (localStorage.getItem("user")) {
+      this.userName = JSON.parse(localStorage.getItem("user")).userName;
+    } else {
+      this.$message.error("请您先登录！", 3);
+      this.$router.push("/login");
+    }
   },
   methods: {
     logout() {

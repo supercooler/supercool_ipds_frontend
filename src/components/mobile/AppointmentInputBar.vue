@@ -96,7 +96,6 @@ export default {
     addParkingBoy(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          console.log(this.appointmentDto);
           this.showDialog();
         }
       });

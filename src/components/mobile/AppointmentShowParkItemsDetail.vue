@@ -36,7 +36,7 @@ import StatusBar from "./StatusBar.vue";
 export default {
   data() {
     return {
-      orderDetail: {},
+      orderDetail: { user: {} },
       parkingLots: [],
       value: ""
     };
@@ -82,9 +82,11 @@ export default {
   methods: {
     parkCar: function() {
       this.orderDetail.status = "已停车";
+      let username = this.orderDetail.user.userName;
       this.orderDetail.parkingLot = this.value;
       this.orderDetail.parkingLot.restCapacity -= 1;
       this.$put("/parking-orders", this.orderDetail).then(() => {
+        this.$get("/sendOneWebSocket/" + username);
         this.$router.go(-1);
       });
     }

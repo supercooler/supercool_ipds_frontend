@@ -1,5 +1,5 @@
 <template>
-  <div class="" style="text-align: center">
+  <div class style="text-align: center">
     <nav-bar
       title="智能派单停车系统"
       left-arrow
@@ -55,6 +55,14 @@ export default {
     onClickLeft() {
       this.$router.go(-1);
       this.active = 0;
+    }
+  },
+  mounted() {
+    if (localStorage.getItem("user")) {
+      this.userName = JSON.parse(localStorage.getItem("user")).userName;
+    } else {
+      this.$message.error("请您先登录！", 3);
+      this.$router.push("/customer-login-mobile");
     }
   }
 };

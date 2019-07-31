@@ -27,10 +27,7 @@ export default new Router({
     {
       path: "/parking-boy",
       name: "parking-boy",
-      component: ParkingBoy,
-      meta: {
-        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
-      }
+      component: ParkingBoy
     },
     {
       path: "/login",
@@ -40,25 +37,16 @@ export default new Router({
     {
       path: "/parking-lot",
       name: "parkingLot",
-      component: ParkingLot,
-      meta: {
-        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
-      }
+      component: ParkingLot
     },
     {
       path: "/parking-order",
       name: "ParkingOrder",
-      component: ParkingOrder,
-      meta: {
-        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
-      }
+      component: ParkingOrder
     },
     {
       path: "/home",
       component: Home,
-      meta: {
-        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
-      },
       children: [
         { path: "parking-lot", component: ParkingLot },
         { path: "parking-order", component: ParkingOrder },
@@ -73,18 +61,12 @@ export default new Router({
         { path: "appointment-list", component: AppointmentList },
         { path: "user-information-mobile", component: UserInformationMobile },
         { path: "parking-order-mobile", component: ParkingOrderMobile }
-      ],
-      meta: {
-        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
-      }
+      ]
     },
     {
       path: "/appointment-list",
       name: "AppointmentList",
-      component: AppointmentList,
-      meta: {
-        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
-      }
+      component: AppointmentList
     },
     {
       path: "/parking-boy-mobile",
@@ -107,26 +89,17 @@ export default new Router({
           path: "appointment-fetch-car-detail/:id/:status",
           component: AppointmentShowDetail
         }
-      ],
-      meta: {
-        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
-      }
+      ]
     },
     {
       path: "/parking-order-mobile",
       name: "ParkingOrderMobile",
-      component: ParkingOrderMobile,
-      meta: {
-        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
-      }
+      component: ParkingOrderMobile
     },
     {
       path: "/user-information-mobile",
       name: "UserInformationMobile",
-      component: UserInformationMobile,
-      meta: {
-        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
-      }
+      component: UserInformationMobile
     },
     {
       path: "/customer-login-mobile",
