@@ -119,6 +119,9 @@ export default new Vuex.Store({
           case Constant.ROLE_USER_SUPER_MANAGER:
             Router.push("/home");
             break;
+          case Constant.ROLE_USER_MANAGER:
+            Router.push("/home");
+            break;
         }
       } else {
         alert(res.msg);

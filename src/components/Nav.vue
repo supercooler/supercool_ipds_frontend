@@ -18,7 +18,7 @@
         <i class="el-icon-menu"></i>
         <span slot="title">停车场管理</span>
       </el-menu-item>
-      <el-menu-item index="3" @click="locationView(3)">
+      <el-menu-item index="3" @click="locationView(3)" v-show="showOrder">
         <i class="el-icon-setting"></i>
         <span slot="title">订单管理</span>
       </el-menu-item>
@@ -27,8 +27,15 @@
 </template>
 
 <script>
+import Constant from "@/common/constance.js";
+
 export default {
   name: "Nav",
+  data() {
+    return {
+      showOrder: true
+    };
+  },
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -52,6 +59,13 @@ export default {
           break;
       }
     }
+  },
+  mounted() {
+    this.showOrder =
+      JSON.parse(localStorage.getItem("user")).role ==
+      Constant.ROLE_USER_MANAGER
+        ? true
+        : false;
   }
 };
 </script>
