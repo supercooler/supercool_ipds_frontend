@@ -114,7 +114,7 @@ export default new Vuex.Store({
             Router.push("/customer-mobile");
             break;
           case Constant.ROLE_USER_PARKING_BOY:
-            Router.push("/parking-boy-mobile");
+            Router.push("/parking-boy-mobile/appointment-park-car-items-list");
             break;
           case Constant.ROLE_USER_SUPER_MANAGER:
             Router.push("/home");
