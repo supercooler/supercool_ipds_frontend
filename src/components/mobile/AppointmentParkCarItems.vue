@@ -1,21 +1,15 @@
 <template>
   <div style="text-align: center">
     <span>
-      <h2>我接手的取车订单</h2>
+      <h2>我的待停车订单</h2>
     </span>
-    <el-table :data="fetchCarOrders" stripe>
+    <el-table :data="parkCarOrders" stripe>
       <el-table-column prop="id" label="订单号"></el-table-column>
-      <el-table-column
-        prop="parkingLot.name"
-        label="所停停车场"
-      ></el-table-column>
+      <el-table-column prop="bookTime" label="预约时间"></el-table-column>
       <el-table-column prop="status" label="状态">
         <template slot-scope="scope">
-          <el-tag @click="getFetchCarOrderItemDetail(scope.row)">
-            <el-badge :value="1" v-if="scope.row.status === '已停车'">{{
-              scope.row.status
-            }}</el-badge>
-            <template v-else>{{ scope.row.status }}</template>
+          <el-tag @click="getParkCarOrderItemDetail(scope.row)">
+            <el-badge :value="1">{{scope.row.status}}</el-badge>
           </el-tag>
         </template>
       </el-table-column>
@@ -28,30 +22,26 @@ export default {
   name: "AppointmentList",
   data() {
     return {
-      fetchCarOrders: [
+      parkCarOrders: [
         {
           id: "1",
-          parkingLot: {
-            name: "amiao"
-          },
+          bookTime: "2019-10-10",
           status: "已下单"
         }
       ]
     };
   },
   methods: {
-    getFetchCarOrderItemDetail: function(row) {
+    getParkCarOrderItemDetail: function(row) {
       this.$router.push({
-        path: `/parking-boy-mobile/appointment-fetch-car-detail/${row.id}/${
-          row.status
-        }`
+        path: `/parking-boy-mobile/appointment-park-car-detail/${row.id}/${row.status}`
       });
     },
     getParkingOrdersByTimer() {
       let parkingBoyName = JSON.parse(localStorage.getItem("user")).userName;
-      this.$get(`/parking-orders/fetch?parkingBoyName=${parkingBoyName}`).then(
+      this.$get(`/parking-orders/park?parkingBoyName=${parkingBoyName}`).then(
         res => {
-          this.fetchCarOrders = res.data;
+          this.parkCarOrders = res.data;
         }
       );
     }

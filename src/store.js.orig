@@ -2,11 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import { get, post, put, myDelete } from "./config/axios";
 import Router from "./router.js";
-<<<<<<< Updated upstream
-import Constant from "@/common/constance.js";
-=======
-import Constant from '@/common/constance.js'
->>>>>>> Stashed changes
+
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -23,33 +19,6 @@ export default new Vuex.Store({
     currentRow: {},
     parkingLots: [],
     response: {},
-    activities: [
-      {
-        content: Constant.HAD_ORDERED,
-        type: "primary",
-        color: "#DCDCDC",
-      },
-      {
-        content: Constant.HAD_DISPATCHED,
-        color: "#DCDCDC"
-      },
-      {
-        content: Constant.HAD_CAR_STOPED,
-        color: "#DCDCDC"
-      },
-      {
-        content: Constant.IN_FETCHING_CAR,
-        color: "#DCDCDC"
-      },
-      {
-        content: Constant.WILL_BE_CONFIRMED,
-        color: "#DCDCDC"
-      },
-      {
-        content: Constant.FINISH_FETCHING,
-        color: "#DCDCDC"
-      }
-    ],
     redundantTableData: [
       {
         id: "",
@@ -71,7 +40,9 @@ export default new Vuex.Store({
     ],
     parkingBoyInfo: {},
     dialogFormVisible: false,
-    parkingOrders: []
+    parkingOrders: [],
+    parkingOrder: {},
+    statusBarCount: 0
   },
   mutations: {
     changeType(state) {
@@ -164,6 +135,9 @@ export default new Vuex.Store({
     },
     setParkingOrders(state, data) {
       state.parkingOrders = data;
+    },
+    setUser(state, data) {
+      localStorage.setItem("user", JSON.stringify(data));
     }
   },
   actions: {
@@ -252,21 +226,37 @@ export default new Vuex.Store({
         location.reload();
       });
     },
-<<<<<<< Updated upstream
     searchParkingOrders: (context, info) => {
       get("/parking-orders" + info).then(response => {
         context.commit("setParkingOrders", response.data);
       });
+    },
+    fetchCar: context => {
+      context.state.response.data.status=Constant.IN_FETCHING_CAR;
+      put("/parking-orders", context.state.response.data).then(response => {
+<<<<<<< Updated upstream
+        context.state.response.data = response.data;
+        location.reload();
+      });
+    },
+    getParkingByUserId: (context, id) => {
+      get(`/parking-orders/user/${id}`).then(response => {
+        context.commit("setParkingOrders", response.data);
+      });
+    },
+    registerUser: (context, user) => {
+      post("/users/register", user).then(response => {
+        context.commit("setUser", response.data);
+        if (response.code === null) {
+          Router.push("/customer-mobile");
 =======
-    fetchCar:(context) => {
-      put("/parking-orders",context.state.response.data).then(response => {
-        if(response.status==200){
-          context.state.response.data=response.body;
-          context.state.activities[3].color="#0bbd87";
+        if (response.status == 200) {
+          context.state.response.data = response.body;
+          context.state.activities[3].color = "#44582d";
           location.reload();
-        }
-      })
 >>>>>>> Stashed changes
+        }
+      });
     }
   }
 });
