@@ -23,20 +23,12 @@
   </div>
 </template>
 <script>
-import { clearInterval, setInterval } from "timers";
+// import { clearInterval, setInterval } from "timers";
 export default {
   name: "AppointmentList",
   data() {
     return {
-      fetchCarOrders: [
-        {
-          id: "1",
-          parkingLot: {
-            name: "amiao"
-          },
-          status: "已下单"
-        }
-      ]
+      fetchCarOrders: []
     };
   },
   methods: {

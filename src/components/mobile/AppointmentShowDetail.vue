@@ -33,16 +33,7 @@ import StatusBar from "./StatusBar.vue";
 export default {
   data() {
     return {
-      orderDetail: {
-        status: "已停车",
-        user: {
-          userName: "洪老板"
-        },
-        carLisenceNumber: "粤A23456",
-        parkingLot: {
-          name: "华为停车场"
-        }
-      }
+      orderDetail: {}
     };
   },
   components: {
