@@ -1,13 +1,29 @@
 <template>
   <div style="text-align: center">
-    <nav-bar title="智能派单停车系统" left-arrow class="nav-bar" @click-left="onClickLeft"></nav-bar>
+    <nav-bar
+      title="智能派单停车系统"
+      left-arrow
+      class="nav-bar"
+      @click-left="onClickLeft"
+    >
+      <el-button size="mini" round slot="right" plain @click="logout"
+        >登出系统</el-button
+      >
+    </nav-bar>
     <router-view></router-view>
     <van-tabbar v-model="active">
       <template v-if="parkDeal !== 0">
-        <van-tabbar-item icon="friends-o" :info="parkDeal" @click="clickParkOrderItem">停车订单</van-tabbar-item>
+        <van-tabbar-item
+          icon="friends-o"
+          :info="parkDeal"
+          @click="clickParkOrderItem"
+          >停车订单</van-tabbar-item
+        >
       </template>
       <template v-else>
-        <van-tabbar-item icon="friends-o" @click="clickParkOrderItem">停车订单</van-tabbar-item>
+        <van-tabbar-item icon="friends-o" @click="clickParkOrderItem"
+          >停车订单</van-tabbar-item
+        >
       </template>
       <template v-if="willDeal !== 0">
         <van-tabbar-item
@@ -15,10 +31,13 @@
           :info="willDeal"
           id="fetchOrder"
           @click="clickFetchOrderItem"
-        >取车订单</van-tabbar-item>
+          >取车订单</van-tabbar-item
+        >
       </template>
       <template v-else>
-        <van-tabbar-item icon="friends-o" @click="clickFetchOrderItem">取车订单</van-tabbar-item>
+        <van-tabbar-item icon="friends-o" @click="clickFetchOrderItem"
+          >取车订单</van-tabbar-item
+        >
       </template>
     </van-tabbar>
   </div>
@@ -85,6 +104,10 @@ export default {
     onClickLeft() {
       this.$router.go(-1);
       this.active = 1;
+    },
+    logout() {
+      localStorage.setItem("user", JSON.stringify(""));
+      this.$router.push("/customer-login-mobile");
     }
   }
 };

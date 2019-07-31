@@ -13,7 +13,7 @@
         style="float:right;margin-top:10px"
         @click="logout"
         v-if="userName != undefined"
-        >点此登出</el-button
+        >登出系统</el-button
       >
     </el-header>
     <el-container>
