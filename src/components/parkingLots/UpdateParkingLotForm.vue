@@ -17,8 +17,8 @@
         <el-input
           v-model="parkingLot.capacity"
           autocomplete="off"
-          maxlength="3"
-          placeholder="容量应在1-999之间"
+          maxlength="2"
+          placeholder="容量应在1-100之间"
         ></el-input>
       </el-form-item>
       <el-form-item>
@@ -38,7 +38,8 @@ export default {
       parkingLot: {
         id: "",
         name: "",
-        capacity: ""
+        capacity: "",
+        restCapacity: ""
       },
       rules: {
         name: [
@@ -60,7 +61,7 @@ export default {
             message: "停车场容量必须为数字",
             trigger: "blur"
           },
-          { min: 1, max: 999, message: "容量在0-999之间", trigger: "blur" }
+          { min: 1, max: 100, message: "容量在0-100之间", trigger: "blur" }
         ]
       }
     };
@@ -75,9 +76,15 @@ export default {
       this.dialogFormVisible = false;
     },
     async updateParkingLot() {
-      this.$store.dispatch("updateParkingLot", this.parkingLot).then(() => {
-        location.reload();
-      });
+      if (this.parkingLot.capacity < this.parkingLot.restCapacity) {
+        this.$message.error("请输入正确的停车场容量！");
+      } else {
+        let temp = this.parkingLot.capacity - this.parkingLot.restCapacity;
+        this.parkingLot.restCapacity = this.parkingLot.restCapacity + temp;
+        this.$store.dispatch("updateParkingLot", this.parkingLot).then(() => {
+          location.reload();
+        });
+      }
       this.dialogFormVisible = false;
     }
   }

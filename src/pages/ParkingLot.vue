@@ -1,15 +1,15 @@
 <template>
   <div class="parkingLot">
     <el-button type="primary" class="addButton" @click="showAddDialog"
-      >添加
-    </el-button>
+      >添加</el-button
+    >
     <el-button
       type="primary"
       icon="el-icon-search"
       class="searchButton"
       @click="searchParkingLot"
-      >搜索
-    </el-button>
+      >搜索</el-button
+    >
     <el-input
       class="searchBar"
       type="text"
@@ -17,8 +17,7 @@
       v-model="text"
       maxlength="15"
       show-word-limit
-    >
-    </el-input>
+    ></el-input>
     <el-table
       :data="
         parkingLots.slice((currentPage - 1) * pageSize, currentPage * pageSize)
@@ -29,6 +28,7 @@
     >
       <el-table-column prop="name" label="名字"></el-table-column>
       <el-table-column prop="capacity" label="容量"></el-table-column>
+      <el-table-column prop="restCapacity" label="剩余容量"></el-table-column>
       <el-table-column prop="address" label="地址"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
@@ -44,8 +44,8 @@
             type="danger"
             icon="el-icon-delete"
             @click="handleDelete(scope.row.id)"
-            >删除
-          </el-button>
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -57,8 +57,7 @@
       :page-size="pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="parkingLots.length"
-    >
-    </el-pagination>
+    ></el-pagination>
     <AddParkingLotDialog
       :currentPage="currentPage"
       :pageSize="pageSize"
