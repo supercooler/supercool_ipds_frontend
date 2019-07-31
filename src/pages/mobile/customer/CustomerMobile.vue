@@ -56,6 +56,14 @@ export default {
       this.$router.go(-1);
       this.active = 0;
     }
+  },
+  mounted() {
+    if (localStorage.getItem("user")) {
+      this.userName = JSON.parse(localStorage.getItem("user")).userName;
+    } else {
+      this.$message.error("请您先登录！", 3);
+      this.$router.push("/customer-login-mobile");
+    }
   }
 };
 </script>
