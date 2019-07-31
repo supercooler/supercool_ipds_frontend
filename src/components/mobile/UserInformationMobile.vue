@@ -17,7 +17,7 @@ export default {
   data() {
     return {
       user: {},
-      circleUrl: "../assets/head.jpg"
+      circleUrl: require("@/assets/head.jpg")
     };
   },
   mounted() {
