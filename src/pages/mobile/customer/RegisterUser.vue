@@ -30,6 +30,13 @@
               autocomplete="off"
             ></el-input> </el-form-item
           ><br />
+          <el-form-item label="确认密码:" prop="checkPass">
+            <el-input
+              type="password"
+              v-model="user.checkPass"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
           <el-form-item>
             <el-button @click="resetForm('addForm')">重置</el-button><br />
             <el-button
@@ -53,15 +60,27 @@ export default {
     NavBar
   },
   data() {
+    var validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.user.password) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
     return {
       user: {
         userName: "",
         password: "",
+        checkPass: "",
         role: Constant.ROLE_USER_CUSTOMER
       },
+
       rules: {
         userName: { required: true, message: "请输入用户名", trigger: "blur" },
-        password: [{ required: true, message: "输入密码", trigger: "blur" }]
+        password: [{ required: true, message: "输入密码", trigger: "blur" }],
+        checkPass: [{ validator: validatePass2, trigger: "blur" }]
       }
     };
   },
