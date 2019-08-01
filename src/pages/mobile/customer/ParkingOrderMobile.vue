@@ -11,20 +11,18 @@
             <el-tag>{{ parkingOrder.carLisenceNumber }}</el-tag>
           </el-form-item>
           <el-form-item label="停车场:">
-            <el-tag v-if="parkingOrder.parkingLot !== null">{{ parkingOrder.parkingLot.name }}</el-tag>
+            <el-tag v-if="parkingOrder.parkingLot !== null">{{
+              parkingOrder.parkingLot.name
+            }}</el-tag>
           </el-form-item>
           <el-form-item label="停车员:">
             <el-tag v-if="parkingOrder.parkingBoy !== null">
-              {{
-              parkingOrder.parkingBoy.name
-              }}
+              {{ parkingOrder.parkingBoy.name }}
             </el-tag>
           </el-form-item>
           <el-form-item label="手机号码:">
             <el-tag v-if="parkingOrder.parkingBoy !== null">
-              {{
-              parkingOrder.parkingBoy.phone
-              }}
+              {{ parkingOrder.parkingBoy.phone }}
             </el-tag>
           </el-form-item>
           <el-form-item>
@@ -34,12 +32,14 @@
               @click="fetchCar"
               ref="fetchCarButton"
               :disabled="isFetchCarDisable"
-            >取车</el-button>
+              >取车</el-button
+            >
             <el-button
               v-if="parkingOrder.status === '待确认'"
               type="primary"
               @click="openRateDialog"
-            >确认订单</el-button>
+              >确认订单</el-button
+            >
           </el-form-item>
         </el-form>
       </div>

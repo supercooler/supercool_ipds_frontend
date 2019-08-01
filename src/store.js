@@ -215,6 +215,7 @@ export default new Vuex.Store({
     createOrder: (context, appoinment) => {
       post("/parking-orders", appoinment).then(function(response) {
         if (response.code === null) {
+          context.state.statusBarCount = 1;
           Router.push("/customer-mobile/parking-order-mobile");
           context.commit("setParkingOrder", response.data);
         } else {

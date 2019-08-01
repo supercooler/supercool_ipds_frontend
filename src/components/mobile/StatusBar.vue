@@ -54,6 +54,13 @@ export default {
     for (let i = 0; i < this.$store.state.statusBarCount; i++) {
       this.status[i].color = "#0bbd87";
     }
+  },
+  watch: {
+    '$store.state.statusBarCount'(newValue) {
+      for (let i = 0; i < newValue; i++) {
+      this.status[i].color = "#0bbd87";
+    }
+    }
   }
 };
 </script>
