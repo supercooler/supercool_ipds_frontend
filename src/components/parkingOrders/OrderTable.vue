@@ -34,7 +34,7 @@
       <el-table-column
         align="center"
         prop="score"
-        label="停车收费"
+        label="用户评分"
       ></el-table-column>
       <el-table-column
         align="center"
