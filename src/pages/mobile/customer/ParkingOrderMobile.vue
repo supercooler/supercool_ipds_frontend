@@ -11,9 +11,9 @@
             <el-tag>{{ parkingOrder.carLisenceNumber }}</el-tag>
           </el-form-item>
           <el-form-item label="停车场:">
-            <el-tag v-if="parkingOrder.parkingLot !== null">{{
-              parkingOrder.parkingLot.name
-            }}</el-tag>
+            <el-tag v-if="parkingOrder.parkingLot !== null">
+              {{ parkingOrder.parkingLot.name }}
+            </el-tag>
           </el-form-item>
           <el-form-item label="停车员:">
             <el-tag>{{ parkingOrder.parkingBoy.name }}</el-tag>
@@ -33,13 +33,19 @@
             <el-button
               v-if="parkingOrder.status === '待确认'"
               type="primary"
-              @click="finishOrder"
-              ref="fetchCarButton"
+              @click="openRateDialog"
               >确认订单</el-button
             >
           </el-form-item>
         </el-form>
       </div>
+      <el-dialog title="提示" :visible.sync="show" :before-close="handleClose">
+        <el-rate v-model="rate" show-text allow-half></el-rate>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="finishOrder">取 消</el-button>
+          <el-button type="primary" @click="finishOrder">确 定</el-button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -47,6 +53,7 @@
 <script>
 import StatusBar from "@/components/mobile/StatusBar.vue";
 import Constant from "@/common/constance.js";
+import { VanDialog } from "vant";
 
 export default {
   name: "ParkingOrderMobile",
@@ -55,15 +62,25 @@ export default {
       parkingOrder: {
         carLisenceNumber: "",
         parkingLot: {},
-        parkingBoy: {}
+        parkingBoy: {},
+        score: 5.0
       },
-      isFetchCarDisable: false
+      isFetchCarDisable: false,
+      show: false,
+      rate: 5.0
     };
   },
   components: {
-    StatusBar
+    StatusBar,
+    VanDialog
   },
   methods: {
+    openRateDialog() {
+      this.show = true;
+    },
+    handleClose() {
+      this.show = false;
+    },
     fetchCar() {
       this.isFetchCarDisable = true;
       this.$store.state.statusBarCount = 4;
@@ -72,12 +89,17 @@ export default {
       let boyName = this.parkingOrder.parkingBoy.name;
       this.$get("/sendOneWebSocket/" + boyName);
     },
-    finishOrder() {
+    async finishOrder() {
       this.$store.state.statusBarCount = 5;
       this.parkingOrder.status = Constant.FINISH_FETCHING;
-      this.$store.dispatch("updateOrderStatus", this.parkingOrder);
+      this.parkingOrder.score = this.rate;
+      await this.updateOrder();
       let boyName = this.parkingOrder.parkingBoy.name;
       this.$get("/sendOneWebSocket/" + boyName);
+      this.show = false;
+    },
+    updateOrder() {
+      this.$store.dispatch("updateOrderStatus", this.parkingOrder);
     },
     initStatus(status) {
       switch (status) {
