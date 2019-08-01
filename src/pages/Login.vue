@@ -32,9 +32,9 @@ export default {
   margin-left: 100px;
   cursor: default;
   font-size: 20px;
-  background: url("../assets/head.jpg");
+  background: url("../assets/supercool.png");
   background-position: center;
-  background-size: 180% 180%;
+  background-size: 100% 100%;
 }
 
 .grid-content {
@@ -42,7 +42,9 @@ export default {
 }
 
 #main {
-  background: url("../assets/background.jpg");
+  background: url("../assets/background1.jpg");
+  height: 100%;
+  background-size: cover;
 }
 
 #login h1 {

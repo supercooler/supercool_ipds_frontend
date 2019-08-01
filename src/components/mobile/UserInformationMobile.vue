@@ -22,7 +22,7 @@ export default {
   data() {
     return {
       user: {},
-      circleUrl: require("@/assets/head.jpg")
+      circleUrl: require("@/assets/supercool.png")
     };
   },
   mounted() {

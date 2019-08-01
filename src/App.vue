@@ -67,4 +67,7 @@ export default {
   width: 100%;
   height: 850px;
 }
+#nav {
+  height: 950px;
+}
 </style>
