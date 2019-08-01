@@ -152,7 +152,7 @@ export default {
     // WebSocket
     if ("WebSocket" in window) {
       this.websocket = new WebSocket(
-        "ws://localhost:8080/websocket/" +
+        "ws://39.100.40.15:8080/websocket/" +
           JSON.parse(localStorage.getItem("user")).userName
       );
       this.initWebSocket();
